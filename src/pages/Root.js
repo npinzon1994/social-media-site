@@ -1,8 +1,12 @@
-import React from 'react'
+import { Outlet } from 'react-router-dom';
+import SidebarNavigation from '../components/UI/SidebarNavigation';
 
 const Root = () => {
   return (
-    <div>Root</div>
+    <>
+      <SidebarNavigation />
+      <Outlet />
+    </>
   )
 }
 

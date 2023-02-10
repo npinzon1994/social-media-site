@@ -1,12 +1,14 @@
-import React from 'react'
-import PageContent from '../components/PageContent'
+import React from "react";
+import LoginForm from "../components/Login/LoginForm";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   return (
-    <PageContent title="Log In">
+    <>
+      <LoginForm />
+      <Link to="/root/home">Home</Link>
+    </>
+  );
+};
 
-    </PageContent>
-  )
-}
-
-export default Login
+export default Login;

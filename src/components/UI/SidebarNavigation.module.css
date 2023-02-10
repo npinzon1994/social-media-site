@@ -1,0 +1,60 @@
+.container {
+    position: fixed;
+    left: 0;
+    height: 100vh;
+    border-right: 1px #e8e8e8 solid;
+}
+
+.logo {
+    width: 100%;
+    max-width: 23px;
+    margin: 20px 0 10px 30px;
+}
+
+.list {
+    list-style-type: none;
+    padding-left: 0;
+    margin: 16px 30px 14px;
+}
+
+nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+li {
+    margin-bottom: 30px;
+    display: flex;
+    
+}
+
+.icon {
+    margin-right: 16px;
+    width: 23px;
+    margin-top: 4px;
+}
+
+/*Navlinks*/
+.list li a {
+    text-decoration: none;
+    font-size: larger;
+    font-weight: 700;
+}
+
+.inactive {
+    color: rgb(34, 34, 34);
+}
+
+.active {
+    color: #ad5dfd;
+}
+
+.sign-out {
+    text-decoration: none;
+    padding: 7px 50px 10px;
+    background-color: #ad5dfd;
+    color: white;
+    border-radius: 20px;
+    font-weight: 500;
+}
