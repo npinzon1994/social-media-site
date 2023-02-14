@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import NewAccountForm from "../components/Login/NewAccountForm";
-import { Link } from "react-router-dom";
+import { Link, redirect, json } from "react-router-dom";
+import AuthContext from "../store/auth-context";
+import { createUserWithEmailAndPassword, AuthErrorCodes } from "firebase/auth";
+import { auth } from "../utils/firebase";
 
 const CreateNewAccount = () => {
+  const authContext = useContext(AuthContext);
+
   return (
     <>
       <NewAccountForm />
@@ -12,3 +17,34 @@ const CreateNewAccount = () => {
 };
 
 export default CreateNewAccount;
+
+export async function action({ request, params }) {
+  const data = await request.formData();
+  const email = data.get("email");
+  const password = data.get("password");
+  console.log(email, password);
+  const { INVALID_EMAIL, EMAIL_EXISTS, WEAK_PASSWORD } = AuthErrorCodes;
+
+  try {
+    const response = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    
+  } catch (error) {
+    let message = "Something went wrong!";
+    switch (error.code) {
+      case INVALID_EMAIL:
+        return {message: 'Please enter a valid email.', status: 400};
+      case EMAIL_EXISTS:
+        return {message: 'Email already exists.', status: 409};
+      case WEAK_PASSWORD:
+        return {message: 'Password must be at least 6 characters', status: 401};
+    }
+    console.log(error.message);
+    console.log(message);
+  }
+
+  return redirect("/");
+}

@@ -1,30 +1,36 @@
-import React, {useContext, useEffect} from "react";
-import {Form, Link} from 'react-router-dom';
-import classes from './NewAccountForm.module.css';
-import siteLogo from '../../assets/site-logo.png';
+import React, { useContext, useEffect } from "react";
+import { Form, Link, useActionData} from "react-router-dom";
+import classes from "./NewAccountForm.module.css";
+import siteLogo from "../../assets/site-logo.png";
 import ThemeContext from "../../store/theme-context";
 
 const NewAccountForm = () => {
   const themeContext = useContext(ThemeContext);
-  const {theme, setTheme} = themeContext;
-  
+  const { theme, setTheme } = themeContext;
+
+  const actionData = useActionData();
+
   useEffect(() => {
-    setTheme('login');
+    setTheme("login");
   }, [theme, setTheme]);
-  
-  return <div className={classes.container}>
-    <Form className={classes.form}>
-    <img src={siteLogo} className={classes.logo} alt="site logo"/>
-        <input type="email" name="email" placeholder="Email"/>
-        <input type="text" name="username" placeholder="Username"/>
-        <input type="password" name="password" placeholder="Password"/>
-        <input type="password" name="confirmpassword" placeholder="Confirm Password"/>
-        <div className={classes['button-div']}>
-            <button>Create Account</button>
-            <Link to="/" className={classes.link}>Back to Login</Link>
-        </div>
+
+
+
+  return (
+    <Form className={classes.form} method="post">
+      <img src={siteLogo} className={classes.logo} alt="site logo" />
+      <input type="text" name="email" placeholder="Email" />
+      {actionData && (actionData.status === 400 || actionData.status === 409) && <span>*{actionData.message}</span>}
+      <input type="password" name="password" placeholder="Password" />
+      {actionData && actionData.status === 401 && <span>*{actionData.message}</span>}
+      <div className={classes["button-div"]}>
+        <button>Create Account</button>
+        <Link to="/" className={classes.link}>
+          Back to Login
+        </Link>
+      </div>
     </Form>
-  </div>;
+  );
 };
 
 export default NewAccountForm;

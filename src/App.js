@@ -9,7 +9,7 @@ import HomePage from "./pages/Home";
 import ProfilePage from "./pages/Profile";
 import AccountPage from "./pages/Account";
 import ThemeContext from "./store/theme-context";
-import CreateNewAccountPage from "./pages/CreateNewAccount";
+import CreateNewAccountPage, {action as createNewAccountAction} from "./pages/CreateNewAccount";
 
 const App = () => {
   const themeContext = useContext(ThemeContext);
@@ -22,7 +22,7 @@ const App = () => {
   
   const router = createBrowserRouter([
     { path: '/', element: <LoginPage /> },
-    { path: '/createNewAccount', element: <CreateNewAccountPage /> },
+    { path: '/createNewAccount', element: <CreateNewAccountPage />, action: createNewAccountAction},
     {
       path: "/root",
       element: <RootLayout />,
