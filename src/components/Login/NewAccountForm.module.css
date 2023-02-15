@@ -62,6 +62,10 @@
     color: white;
 }
 
+.loading-spinner {
+    width: 20px;
+}
+
 .link {
     text-decoration: none;
     color: #f1e6fc;

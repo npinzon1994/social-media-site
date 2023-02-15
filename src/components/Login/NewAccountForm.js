@@ -1,14 +1,16 @@
 import React, { useContext, useEffect } from "react";
-import { Form, Link, useActionData} from "react-router-dom";
+import { Form, Link, useActionData, useNavigation} from "react-router-dom";
 import classes from "./NewAccountForm.module.css";
 import siteLogo from "../../assets/site-logo.png";
 import ThemeContext from "../../store/theme-context";
+import loadingSpinner from '../../assets/loading-spinner.gif';
 
 const NewAccountForm = () => {
   const themeContext = useContext(ThemeContext);
   const { theme, setTheme } = themeContext;
 
   const actionData = useActionData();
+  const navigation = useNavigation();
 
   useEffect(() => {
     setTheme("login");
@@ -24,7 +26,7 @@ const NewAccountForm = () => {
       <input type="password" name="password" placeholder="Password" />
       {actionData && actionData.status === 401 && <span>*{actionData.message}</span>}
       <div className={classes["button-div"]}>
-        <button>Create Account</button>
+        <button>{navigation.state === 'submitting' ? <img className={classes['loading-spinner']} src={loadingSpinner} alt="Loading spinner"/> : 'Create Account'}</button>
         <Link to="/" className={classes.link}>
           Back to Login
         </Link>

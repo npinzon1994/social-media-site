@@ -7,6 +7,11 @@
 }
 
 .form {
+    position: absolute;
+    top: 16%;
+    left: 50%;
+    margin-left: -9%;
+    width: 18rem;
     display: flex;
     flex-direction: column;
     margin-top: 26px;
@@ -55,6 +60,10 @@
     margin-right: 26px;
     background: #53b9e9;
     color: white;
+}
+
+.loading-spinner {
+    width: 20px;
 }
 
 .link {

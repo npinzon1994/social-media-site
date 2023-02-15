@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Form } from "react-router-dom";
 import classes from "./SidebarNavigation.module.css";
 import siteLogo from "../../assets/site-logo.png";
 import homeIcon from "../../assets/home.svg";
@@ -86,9 +86,11 @@ const SidebarNavigation = () => {
             </NavLink>
           </li>
         </ul>
-        <NavLink to="/" className={classes["sign-out"]}>
-          Sign Out
-        </NavLink>
+        <Form action="logout" method="post">
+          <button className={classes["sign-out"]}>
+            Sign Out
+          </button>
+        </Form>
       </nav>
     </div>
   );

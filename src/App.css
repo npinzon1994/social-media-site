@@ -1,3 +1,8 @@
+.container{
+  height: 100vh;
+  width: 100vw;
+}
+
 .light {
   background-color: #fff;
   color: rgb(34, 34, 34);
@@ -11,3 +16,4 @@
 .login {
   background: linear-gradient(to right, #b56aff, #56bceb);
 }
+

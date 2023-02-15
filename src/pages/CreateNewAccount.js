@@ -1,24 +1,22 @@
-import React, { useContext } from "react";
+import React from "react";
 import NewAccountForm from "../components/Login/NewAccountForm";
-import { Link, redirect, json } from "react-router-dom";
-import AuthContext from "../store/auth-context";
+import { redirect } from "react-router-dom";
 import { createUserWithEmailAndPassword, AuthErrorCodes } from "firebase/auth";
 import { auth } from "../utils/firebase";
+import {setAuthToken, setTokenExpiration} from '../utils/auth';
 
 const CreateNewAccount = () => {
-  const authContext = useContext(AuthContext);
 
   return (
     <>
       <NewAccountForm />
-      <Link to="/root/home">Home</Link>
     </>
   );
 };
 
 export default CreateNewAccount;
 
-export async function action({ request, params }) {
+export async function action({ request }) {
   const data = await request.formData();
   const email = data.get("email");
   const password = data.get("password");
@@ -31,6 +29,13 @@ export async function action({ request, params }) {
       email,
       password
     );
+    const userId = response.user.uid;
+    const token = (await response.user.getIdToken()).toString();
+
+    setAuthToken(token);
+    setTokenExpiration();
+
+    return redirect(`/${userId}/home`);
     
   } catch (error) {
     let message = "Something went wrong!";
@@ -41,10 +46,11 @@ export async function action({ request, params }) {
         return {message: 'Email already exists.', status: 409};
       case WEAK_PASSWORD:
         return {message: 'Password must be at least 6 characters', status: 401};
+      default: message = "Something went wrong!";
     }
     console.log(error.message);
     console.log(message);
   }
 
-  return redirect("/");
+  
 }
