@@ -52,9 +52,17 @@ li {
 
 .sign-out {
     text-decoration: none;
-    padding: 7px 50px 10px;
+    padding: 14px 54px;
     background-color: #ad5dfd;
     color: white;
-    border-radius: 20px;
+    border-radius: 30px;
     font-weight: 500;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: medium;
+}
+
+.sign-out:hover {
+    background-color: #9954dd;
 }

@@ -70,3 +70,8 @@
     text-decoration: none;
     color: #f1e6fc;
 }
+
+.invalid {
+    color: rgb(184, 28, 28);
+    margin-bottom: 10px;
+}

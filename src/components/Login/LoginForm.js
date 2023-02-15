@@ -18,7 +18,7 @@ const LoginForm = () => {
   return (
     <Form className={classes.form} method="post">
       <img src={siteLogo} className={classes.logo} alt="site logo" />
-      {actionData && actionData.status === 401 && <span>*{actionData.message}</span>}
+      {actionData && actionData.status === 401 && <span className={classes.invalid}>*{actionData.message}</span>}
       <input type="text" name="email" placeholder="Email" />
       <input type="password" name="password" placeholder="Password" />
       <div className={classes["button-div"]}>

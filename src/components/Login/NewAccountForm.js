@@ -21,10 +21,10 @@ const NewAccountForm = () => {
   return (
     <Form className={classes.form} method="post">
       <img src={siteLogo} className={classes.logo} alt="site logo" />
-      <input type="text" name="email" placeholder="Email" />
-      {actionData && (actionData.status === 400 || actionData.status === 409) && <span>*{actionData.message}</span>}
-      <input type="password" name="password" placeholder="Password" />
-      {actionData && actionData.status === 401 && <span>*{actionData.message}</span>}
+      {actionData && (actionData.status === 400 || actionData.status === 409) && <span className={classes.invalid}>*{actionData.message}</span>}
+      <input type="text" name="email" placeholder="Email" className={classes['email-input']}/>
+      {actionData && actionData.status === 401 && <span className={classes.invalid}>*{actionData.message}</span>}
+      <input type="password" name="password" placeholder="Password" className={classes['password-input']}/>
       <div className={classes["button-div"]}>
         <button>{navigation.state === 'submitting' ? <img className={classes['loading-spinner']} src={loadingSpinner} alt="Loading spinner"/> : 'Create Account'}</button>
         <Link to="/" className={classes.link}>
