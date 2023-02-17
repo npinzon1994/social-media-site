@@ -3,33 +3,8 @@ import classes from "./InfoContainer.module.css";
 import { useSelector } from "react-redux";
 import linkIcon from "../../assets/Profile/link.svg";
 import calendarIcon from "../../assets/Profile/calendar.svg";
-
-export const truncate = (followers) => {
-  let convertedString = followers.toString();
-  let followerCount = "";
-  if (followers > 9999 && followers < 100000) {
-    if (followers % 1000 === 0) {
-      followerCount = convertedString.substring(0, 2) + "K";
-      return followerCount;
-    }
-    const leftOfDecimal = convertedString.substring(0, 2);
-    const rightOfDecimal = convertedString.substring(2, 3);
-    followerCount = leftOfDecimal + "." + rightOfDecimal + "K";
-    return followerCount;
-  }
-
-  if (followers > 99999 && followers < 1000000) {
-    if (followers % 1000 === 0) {
-      followerCount = convertedString.substring(0, 3) + "K";
-      return followerCount;
-    }
-    const leftOfDecimal = convertedString.substring(0, 3);
-    const rightOfDecimal = convertedString.substring(3, 4);
-    followerCount = leftOfDecimal + "." + rightOfDecimal + "K";
-    return followerCount;
-  }
-  return convertedString;
-};
+import { truncate } from "../../util/profile";
+import {NavLink} from 'react-router-dom';
 
 const InfoContainer = () => {
   const displayName = useSelector((state) => state.profileInfo.displayName);
@@ -76,11 +51,12 @@ const InfoContainer = () => {
         </li>
       </ul>
       <ul className={classes["post-filter"]}>
-        <li>Posts</li>
-        <li>Posts & replies</li>
-        <li>Media</li>
-        <li>Likes</li>
+        <li><NavLink to="?mode=">Posts</NavLink></li>
+        <li><NavLink>Posts & replies</NavLink></li>
+        <li><NavLink>Media</NavLink></li>
+        <li><NavLink>Likes</NavLink></li>
       </ul>
+      <div className={classes['sliding-bar']}></div>
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import { redirect } from "react-router-dom";
 import { signOut } from "firebase/auth";
-import { auth } from '../utils/firebase';
+import { auth } from '../firebase';
 
 export async function action() {
     localStorage.removeItem('token');

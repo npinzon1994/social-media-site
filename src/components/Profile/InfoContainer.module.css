@@ -67,3 +67,8 @@
     font-weight: 500;
     
 }
+
+.post-filter li a {
+    text-decoration: none;
+    color: rgb(34, 34, 34);
+}

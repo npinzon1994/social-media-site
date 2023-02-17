@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Outlet, useSubmit, useLoaderData } from "react-router-dom";
-import { getTokenDuration } from "../utils/auth";
+import { getTokenDuration } from "../util/auth";
 import SidebarNavigation from "../components/UI/SidebarNavigation";
 import classes from './Root.module.css';
 

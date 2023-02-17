@@ -1,5 +1,7 @@
 .container{
     border-right: 1px #e8e8e8 solid;
+    border-left: 1px #e8e8e8 solid;
+    margin-left: 240px;
     
 }
 

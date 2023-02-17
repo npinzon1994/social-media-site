@@ -3,6 +3,7 @@ import classes from "./ProfileInfo.module.css";
 import InfoContainer from "./InfoContainer";
 import NameNavHeader from "./NameNavHeader";
 import { useSelector } from "react-redux";
+import PostList from "./PostList";
 
 const ProfileInfo = () => {
   const bannerPic = useSelector((state) => state.profileInfo.bannerPic);
@@ -17,7 +18,7 @@ const ProfileInfo = () => {
       <img src={profilePic} alt="Profile pic" className={classes['profile-pic']}/>
       <button className={classes['edit-button']}>Edit profile</button>
       <InfoContainer />
-      <div></div>
+      <PostList />
     </div>
   );
 };

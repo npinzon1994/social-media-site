@@ -1,9 +1,7 @@
 .container {
-    /* position: fixed;
-    left: 0; */
+    position: fixed;
+    /* left: 0; */
     height: 100vh;
-    border-right: 1px #e8e8e8 solid;
-    border-left: 1px #e8e8e8 solid;
     width: 240px;
 }
 

@@ -13,7 +13,7 @@ import CreateNewAccountPage, {
   action as createNewAccountAction,
 } from "./pages/CreateNewAccount";
 import { action as logoutAction } from "./pages/Logout";
-import { checkAuthLoader } from "./utils/auth";
+import { checkAuthLoader } from "./util/auth";
 
 const App = () => {
   const themeContext = useContext(ThemeContext);

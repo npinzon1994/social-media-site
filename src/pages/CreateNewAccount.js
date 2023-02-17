@@ -2,8 +2,8 @@ import React from "react";
 import NewAccountForm from "../components/Login/NewAccountForm";
 import { redirect } from "react-router-dom";
 import { createUserWithEmailAndPassword, AuthErrorCodes } from "firebase/auth";
-import { auth } from "../utils/firebase";
-import {setAuthToken, setTokenExpiration} from '../utils/auth';
+import { auth } from "../firebase";
+import {setAuthToken, setTokenExpiration} from '../util/auth';
 
 const CreateNewAccount = () => {
 

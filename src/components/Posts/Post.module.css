@@ -1,0 +1,93 @@
+.container {
+  display: flex;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-top: 16px;
+  border-bottom: 1px #e8e8e8 solid;
+}
+
+.pfp-container {
+  margin-right: 12px;
+  margin-top: 3px;
+}
+
+.profile-pic {
+  width: 40px;
+  border-radius: 50%;
+}
+
+.inner-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.header-info {
+    display: flex;
+    align-items: center;
+}
+
+.name {
+    font-weight: 700;
+    margin-right: 6px;
+}
+
+.username {
+    margin-right: 4px;
+    color: rgb(136, 124, 124);
+}
+
+.date {
+    margin-left: 4px;
+    color: rgb(136, 124, 124);
+}
+
+.post-options {
+    position: relative;
+    right: -140px;
+    font-weight: 800;
+    border-radius: 50%;
+    padding: 6px 6px 7px;
+    border: none;
+    color: rgb(136, 124, 124);
+    background: transparent;
+    cursor: pointer;
+}
+
+.post-options:hover {
+    transition: 0.3s;
+    background: #f1f1f1;
+}
+
+.caption {
+    margin-bottom: 12px;
+}
+
+.media {
+  width: 100%;
+  border-radius: 14px;
+  border: 1px #c2c1c1 solid;
+}
+
+.metrics {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-evenly;
+    padding-left: 0;
+}
+
+.metrics li {
+    margin-bottom: 0;
+    align-items: center;
+    font-size: small;
+}
+
+.metrics li span {
+    color: rgb(136, 124, 124);
+}
+
+.metrics li img {
+    margin-right: 8px;
+    cursor: pointer;
+}

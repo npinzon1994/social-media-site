@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import classes from './NameNavHeader.module.css';
-import {truncate} from './InfoContainer';
+import { truncate } from "../../util/profile";
 
 const NameNavHeader = () => {
   const name = useSelector(state => state.profileInfo.displayName);

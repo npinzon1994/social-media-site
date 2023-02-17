@@ -2,8 +2,8 @@ import { signInWithEmailAndPassword, AuthErrorCodes } from "firebase/auth";
 import React from "react";
 import { redirect } from "react-router-dom";
 import LoginForm from "../components/Login/LoginForm";
-import { setAuthToken, setTokenExpiration } from "../utils/auth";
-import { auth } from "../utils/firebase";
+import { setAuthToken, setTokenExpiration } from "../util/auth";
+import { auth } from "../firebase";
 
 const Login = () => {
   return (
