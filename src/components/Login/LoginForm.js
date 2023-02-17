@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { Form, Link, useActionData, useNavigation } from "react-router-dom";
 import classes from "./LoginForm.module.css";
 import siteLogo from "../../assets/site-logo.png";
-import ThemeContext from "../../store/theme-context";
+import ThemeContext from "../../store/context/theme-context";
 import loadingSpinner from '../../assets/loading-spinner.gif';
 
 const LoginForm = () => {

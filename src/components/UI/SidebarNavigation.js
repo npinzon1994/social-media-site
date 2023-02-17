@@ -2,18 +2,19 @@ import React from "react";
 import { NavLink, Form } from "react-router-dom";
 import classes from "./SidebarNavigation.module.css";
 import siteLogo from "../../assets/site-logo.png";
-import homeIcon from "../../assets/home.svg";
-import notificationsIcon from "../../assets/alert.svg";
-import messagesIcon from "../../assets/message.svg";
-import profileIcon from "../../assets/profile.svg";
-import accountIcon from "../../assets/settings.svg";
+import homeIcon from "../../assets/Sidebar/home.svg";
+import notificationsIcon from "../../assets/Sidebar/alert.svg";
+import messagesIcon from "../../assets/Sidebar/message.svg";
+import profileIcon from "../../assets/Sidebar/profile.svg";
+import accountIcon from "../../assets/Sidebar/settings.svg";
 
 const SidebarNavigation = () => {
   return (
     <div className={classes.container}>
-      <img src={siteLogo} className={classes.logo} alt="site logo" />
-      <nav>
+
+      
         <ul className={classes.list}>
+          <li><img src={siteLogo} className={classes.icon} alt="site logo" /></li>
           <li>
             <img className={classes.icon} src={homeIcon} alt="home icon" />
             <NavLink
@@ -91,7 +92,7 @@ const SidebarNavigation = () => {
             Sign Out
           </button>
         </Form>
-      </nav>
+
     </div>
   );
 };

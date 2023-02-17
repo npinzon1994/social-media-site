@@ -8,7 +8,7 @@ import MessagingPage from "./pages/Messaging";
 import HomePage from "./pages/Home";
 import ProfilePage from "./pages/Profile";
 import AccountPage from "./pages/Account";
-import ThemeContext from "./store/theme-context";
+import ThemeContext from "./store/context/theme-context";
 import CreateNewAccountPage, {
   action as createNewAccountAction,
 } from "./pages/CreateNewAccount";
@@ -37,7 +37,7 @@ const App = () => {
       id: 'root',
       loader: checkAuthLoader,
       children: [
-        { path: "home", element: <HomePage /> }, //this will ultimately have a path of the :userId
+        { path: "home", element: <HomePage /> },
         { path: "notifications", element: <NotificationsPage /> },
         { path: "messaging", element: <MessagingPage /> },
         { path: "profile", element: <ProfilePage /> },

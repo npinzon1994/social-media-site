@@ -1,8 +1,5 @@
 .container{
-    /* position: absolute;
-    right: 0; */
-    height: 100vh;
-    margin-left: 215.938px;
+    border-right: 1px #e8e8e8 solid;
     
 }
 

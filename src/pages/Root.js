@@ -1,7 +1,8 @@
 import { useEffect } from "react";
 import { Outlet, useSubmit, useLoaderData } from "react-router-dom";
-import SidebarNavigation from "../components/UI/SidebarNavigation";
 import { getTokenDuration } from "../utils/auth";
+import SidebarNavigation from "../components/UI/SidebarNavigation";
+import classes from './Root.module.css';
 
 const getTimeLeft = (tokenDuration) => {
   const tokenDurationDate = new Date(tokenDuration);
@@ -39,10 +40,12 @@ const Root = () => {
   }, [token, submit]);
 
   return (
-    <>
-      <SidebarNavigation />
-      <Outlet />
-    </>
+    <div className={classes['outer-container']}>
+      <div className={classes['inner-container']}>
+        <SidebarNavigation />
+        <Outlet />
+      </div>
+    </div>
   );
 };
 

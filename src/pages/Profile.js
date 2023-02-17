@@ -1,9 +1,10 @@
 import React from "react";
+import ProfileInfo from "../components/Profile/ProfileInfo";
 import PageContent from "../components/UI/PageContent";
 
 const Profile = () => {
-  return <PageContent title="Profile">
-
+  return <PageContent>
+    <ProfileInfo />
   </PageContent>;
 };
 

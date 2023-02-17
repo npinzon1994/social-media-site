@@ -3,14 +3,18 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import ThemeProvider from "./store/ThemeProvider";
+import ThemeProvider from "./store/context/ThemeProvider";
+import { Provider } from "react-redux";
+import store from "./store/redux";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider>
         <App />
-    </ThemeProvider>
+      </ThemeProvider>
+    </Provider>
   </React.StrictMode>
 );
 

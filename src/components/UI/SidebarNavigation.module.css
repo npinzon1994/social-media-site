@@ -1,8 +1,10 @@
 .container {
-    position: fixed;
-    left: 0;
+    /* position: fixed;
+    left: 0; */
     height: 100vh;
     border-right: 1px #e8e8e8 solid;
+    border-left: 1px #e8e8e8 solid;
+    width: 240px;
 }
 
 .logo {
@@ -18,9 +20,9 @@
 }
 
 nav {
-    display: flex;
+    /* display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: center; */
 }
 
 li {
@@ -61,6 +63,8 @@ li {
     cursor: pointer;
     font-weight: 600;
     font-size: medium;
+    margin-left: 30px;
+    
 }
 
 .sign-out:hover {
