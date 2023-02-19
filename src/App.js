@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import "./App.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import RootLayout from "./pages/Root";
+import RootLayout, {loader as userInfoLoader} from "./pages/Root";
 import LoginPage, { action as loginAction } from "./pages/Login";
 import NotificationsPage from "./pages/Notifications";
 import MessagingPage from "./pages/Messaging";
@@ -13,7 +13,6 @@ import CreateNewAccountPage, {
   action as createNewAccountAction,
 } from "./pages/CreateNewAccount";
 import { action as logoutAction } from "./pages/Logout";
-import { checkAuthLoader } from "./util/auth";
 
 const App = () => {
   const themeContext = useContext(ThemeContext);
@@ -35,7 +34,7 @@ const App = () => {
       path: "/:userId",
       element: <RootLayout />,
       id: 'root',
-      loader: checkAuthLoader,
+      loader: userInfoLoader,
       children: [
         { path: "home", element: <HomePage /> },
         { path: "notifications", element: <NotificationsPage /> },

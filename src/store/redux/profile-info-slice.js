@@ -4,18 +4,18 @@ import defaultBanner from "../../assets/Profile/default-banner.png";
 
 //THIS IS JUST DUMMY DATA FOR TESTING -- JUST FOR NOW
 const initialState = {
-  id: "TVIAsUgbVvSc4qeguOQ7E7wkXsI2",
-  username: "npinzon1994",
-  displayName: "Nikki Pinzon 💜",
+  id: '',
+  username: "",
+  displayName: "",
   profilePic: blankPfp,
   bannerPic: defaultBanner,
-  bio: "Hi i'm Nikki and I like to develop apps n shake my booty < /> 🍑",
-  website: "https://nikkipinzon.com",
-  dateJoined: "February 2023",
-  following: 165,
-  followers: 109050,
+  bio: "",
+  website: "",
+  dateJoined: null,
+  following: 0,
+  followers: 0,
   posts: [],
-  numberOfPosts: 12500,
+  numberOfPosts: 0,
   messageThreads: [],
 };
 

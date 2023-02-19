@@ -1,10 +1,11 @@
 import React from "react";
 import classes from "./InfoContainer.module.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import linkIcon from "../../assets/Profile/link.svg";
 import calendarIcon from "../../assets/Profile/calendar.svg";
 import { truncate } from "../../util/profile";
-import {NavLink} from 'react-router-dom';
+import { NavLink, useRouteLoaderData } from "react-router-dom";
+import { profileInfoActions } from "../../store/redux/profile-info-slice";
 
 const InfoContainer = () => {
   const displayName = useSelector((state) => state.profileInfo.displayName);
@@ -15,6 +16,29 @@ const InfoContainer = () => {
   const following = useSelector((state) => state.profileInfo.following);
   const followers = useSelector((state) => state.profileInfo.followers);
 
+  const loadedUserData = useRouteLoaderData("root");
+  const dispatch = useDispatch();
+
+  const userLoggedInId = localStorage.getItem("LOGIN_ID");
+  for(const key in loadedUserData) {
+    if(loadedUserData[key].id === userLoggedInId){
+      //take everything from loaded data and store inside redux
+      console.log("Loaded ID: ", loadedUserData[key].id);
+      dispatch(profileInfoActions.setId(loadedUserData[key].id));
+
+      console.log("Loaded Username: ", loadedUserData[key].username);
+      dispatch(profileInfoActions.setUsername(loadedUserData[key].username));
+
+      console.log("Loaded Display Name: ", loadedUserData[key].displayName);
+      dispatch(profileInfoActions.setDisplayName(loadedUserData[key].displayName));
+
+      console.log("Loaded Date Joined: ", loadedUserData[key].dateJoined);
+      dispatch(profileInfoActions.setDateJoined(loadedUserData[key].dateJoined));
+      
+    }
+  }
+  
+  localStorage.removeItem("LOGIN_ID");
   return (
     <div className={classes["main-container"]}>
       <div className={classes["name-container"]}>
@@ -51,12 +75,19 @@ const InfoContainer = () => {
         </li>
       </ul>
       <ul className={classes["post-filter"]}>
-        <li><NavLink to="?mode=">Posts</NavLink></li>
-        <li><NavLink>Posts & replies</NavLink></li>
-        <li><NavLink>Media</NavLink></li>
-        <li><NavLink>Likes</NavLink></li>
+        <li>
+          <NavLink to="">Posts</NavLink>
+        </li>
+        <li>
+          <NavLink>Posts & replies</NavLink>
+        </li>
+        <li>
+          <NavLink>Media</NavLink>
+        </li>
+        <li>
+          <NavLink>Likes</NavLink>
+        </li>
       </ul>
-      <div className={classes['sliding-bar']}></div>
     </div>
   );
 };

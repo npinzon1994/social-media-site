@@ -73,7 +73,7 @@
     margin-top: 20px;
     margin-bottom: 20px;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-around;
     padding-left: 0;
 }
 
@@ -85,6 +85,7 @@
 
 .metrics li span {
     color: rgb(136, 124, 124);
+    /* margin-right: 6rem; */
 }
 
 .metrics li img {

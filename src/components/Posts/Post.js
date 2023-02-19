@@ -23,11 +23,15 @@ const Post = (props) => {
           <button className={classes["post-options"]}>•••</button>
         </div>
         <span className={classes.caption}>{props.caption}</span>
-        <img
-          className={classes.media}
-          src={props.image.media}
-          alt={props.image.alt}
-        />
+        {props.image.media ? (
+          <img
+            className={classes.media}
+            src={props.image.media}
+            alt={props.image.alt}
+          />
+        ) : (
+          ""
+        )}
         <ul className={classes.metrics}>
           <li>
             <img src={replyIcon} alt="reply icon -- speech bubble" />

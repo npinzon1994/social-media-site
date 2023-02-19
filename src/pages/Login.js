@@ -30,8 +30,10 @@ export async function action({ request }) {
     const token = (await response.user.getIdToken()).toString();
     setAuthToken(token);
     setTokenExpiration();
+    
 
     console.log("TOKEN -- ", token);
+    localStorage.setItem("LOGIN_ID", userId);
 
     return redirect(`/${userId}/home`);
   } catch (error) {

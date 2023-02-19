@@ -65,7 +65,7 @@
 .post-filter li {
     margin-bottom: 0;
     font-weight: 500;
-    
+    display: block;
 }
 
 .post-filter li a {

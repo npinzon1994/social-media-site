@@ -24,6 +24,34 @@ const PostList = () => {
       username,
       pfp,
       date: getPostDate(new Date()),
+      caption: "just setting up my twttr",
+      image: { media: "", alt: "" },
+      replies: [
+        "whoa!",
+        "whoa!",
+        "whoa!",
+        "whoa!",
+        "whoa!",
+        "whoa!",
+        "whoa!",
+        "whoa!",
+        "whoa!",
+        "whoa!",
+        "whoa!",
+        "whoa!",
+        "whoa!",
+        "whoa!",
+        "whoa!",
+        "whoa!",
+      ],
+      likes: 4689,
+      retweets: 634,
+    },
+    {
+      name,
+      username,
+      pfp,
+      date: getPostDate(new Date()),
       caption: "Dress be making my booty look good 🍑",
       image: { media, alt: "My backside in a bodycon minidress" },
       replies: [
@@ -53,7 +81,10 @@ const PostList = () => {
       pfp,
       date: getPostDate(new Date()),
       caption: "Heyoo check out this sick-ass portfolio 🤙",
-      image: { media: placeholder, alt: "screenshot of Nikki Pinzon\'s portfolio website" },
+      image: {
+        media: placeholder,
+        alt: "screenshot of Nikki Pinzon's portfolio website",
+      },
       replies: [
         "whoa!",
         "whoa!",
@@ -82,22 +113,24 @@ const PostList = () => {
       date: getPostDate(new Date()),
       caption: "Dress be making my booty look good 🍑",
       image: { media, alt: "My backside in a bodycon minidress" },
-      replies: ["whoa!",
-      "whoa!",
-      "whoa!",
-      "whoa!",
-      "whoa!",
-      "whoa!",
-      "whoa!",
-      "whoa!",
-      "whoa!",
-      "whoa!",
-      "whoa!",
-      "whoa!",
-      "whoa!",
-      "whoa!",
-      "whoa!",
-      "whoa!",],
+      replies: [
+        "whoa!",
+        "whoa!",
+        "whoa!",
+        "whoa!",
+        "whoa!",
+        "whoa!",
+        "whoa!",
+        "whoa!",
+        "whoa!",
+        "whoa!",
+        "whoa!",
+        "whoa!",
+        "whoa!",
+        "whoa!",
+        "whoa!",
+        "whoa!",
+      ],
       likes: 9437,
       retweets: 918,
     },
@@ -111,13 +144,21 @@ const PostList = () => {
       date={post.date}
       caption={post.caption}
       image={{ media: post.image.media, alt: post.image.alt }}
-      replies={post.replies.length !== 0 ? truncate(post.replies.length) : ''}
-      likes={post.likes ? truncate(post.likes) : ''}
-      retweets={post.retweets ? truncate(post.retweets) : ''}
+      replies={post.replies.length !== 0 ? truncate(post.replies.length) : ""}
+      likes={post.likes ? truncate(post.likes) : ""}
+      retweets={post.retweets ? truncate(post.retweets) : ""}
     />
   ));
 
-  return <ul className={classes.list}>{posts.length !== 0 ? posts : <p className={classes['empty-message']}>Oof no posts yet, buddy</p>}</ul>;
+  return (
+    <ul className={classes.list}>
+      {posts.length !== 0 ? (
+        posts
+      ) : (
+        <p className={classes["empty-message"]}>Oof no posts yet, buddy</p>
+      )}
+    </ul>
+  );
 };
 
 export default PostList;
