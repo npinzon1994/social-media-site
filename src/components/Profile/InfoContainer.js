@@ -35,6 +35,13 @@ const InfoContainer = () => {
       console.log("Loaded Date Joined: ", loadedUserData[key].dateJoined);
       dispatch(profileInfoActions.setDateJoined(loadedUserData[key].dateJoined));
       
+      console.log("Loaded Profile Pic: ", loadedUserData[key].profilePic);
+      dispatch(profileInfoActions.setProfilePic(loadedUserData[key].profilePic));
+
+      console.log("Loaded Banner Pic: ", loadedUserData[key].bannerPic);
+      dispatch(profileInfoActions.setBannerPic(loadedUserData[key].bannerPic));
+      
+      
     }
   }
   

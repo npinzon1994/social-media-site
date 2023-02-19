@@ -5,6 +5,8 @@ import SidebarNavigation from "../components/UI/SidebarNavigation";
 import classes from "./Root.module.css";
 import { useDispatch } from "react-redux";
 import { profileInfoActions } from "../store/redux/profile-info-slice";
+import { blankPfp } from "./CreateNewAccount";
+import { defaultBanner } from "./CreateNewAccount";
 
 const getTimeLeft = (tokenDuration) => {
   const tokenDurationDate = new Date(tokenDuration);
@@ -52,10 +54,6 @@ const Root = () => {
         localStorage.removeItem("ID");
         localStorage.removeItem("USERNAME");
         localStorage.removeItem("DATE_JOINED");
-        console.log("Initial User ID:", id);
-        console.log("Initial Username:", username);
-        console.log("Initial Display Name:", displayName);
-        console.log("Initial Date Joined:", dateJoined);
         return { id, username, displayName, dateJoined };
       };
     
@@ -75,10 +73,12 @@ const Root = () => {
       dispatch(profileInfoActions.setUsername(username));
       dispatch(profileInfoActions.setDisplayName(displayName));
       dispatch(profileInfoActions.setDateJoined(dateJoined));
-  
+      
       console.log("Username and ID successfully stored in redux!");
     }
-
+    
+    dispatch(profileInfoActions.setProfilePic(blankPfp));
+    dispatch(profileInfoActions.setBannerPic(defaultBanner));
     
   }, [dispatch]);
 

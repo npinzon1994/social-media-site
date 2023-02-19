@@ -1,14 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
-import blankPfp from "../../assets/Profile/blank-profile-pic.svg";
-import defaultBanner from "../../assets/Profile/default-banner.png";
 
 //THIS IS JUST DUMMY DATA FOR TESTING -- JUST FOR NOW
 const initialState = {
-  id: '',
+  id: "",
   username: "",
   displayName: "",
-  profilePic: blankPfp,
-  bannerPic: defaultBanner,
+  profilePic: "",
+  bannerPic: "",
   bio: "",
   website: "",
   dateJoined: null,
