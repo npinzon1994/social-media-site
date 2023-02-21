@@ -61,6 +61,7 @@
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+  align-items: center;
 }
 
 .replace-banner-image {
@@ -90,7 +91,8 @@
 }
 
 .delete-banner {
-  width: 18px;
+  width: 16px;
+  height: 26px;
   background: rgba(34, 34, 34, 0.55);
   margin: 0 12px;
   padding: 10px 15px;

@@ -13,16 +13,22 @@ import {
   ref as storageRef,
   uploadBytesResumable,
 } from "firebase/storage";
+import { defaultBanner } from "../../pages/CreateNewAccount";
 
+//helper constants for uploading files
 let newBannerPicURL = "";
 let newProfilePicURL = "";
 let elementTriggeringFileUpload = "";
+
+//helper validation functions/constants
+const isEmpty = (value => value === '');
+const isValidWebsite = (urlInputElement => urlInputElement.checkValidity());
+const formIsValid = null;
 
 const EditProfile = (props) => {
   //Info loaded from Redux Store
   const loadedBannerPic = useSelector((state) => state.profileInfo.bannerPic);
   const loadedProfilePic = useSelector((state) => state.profileInfo.profilePic);
-
   const loadedDisplayName = useSelector(
     (state) => state.profileInfo.displayName
   );
@@ -52,7 +58,10 @@ const EditProfile = (props) => {
   console.log(file);
   const imageUploadHandler = (event) => {
     console.log("ELEMENT THAT TRIGGERED THIS EVENT:", event.target.id);
-    if(event.target.id === "banner-upload" || event.target.id === "pfp-upload"){
+    if (
+      event.target.id === "banner-upload" ||
+      event.target.id === "pfp-upload"
+    ) {
       elementTriggeringFileUpload = event.target.id;
     }
     const image = event.target.files[0];
@@ -86,11 +95,11 @@ const EditProfile = (props) => {
           async () => {
             //download url
             const url = await getDownloadURL(uploadTask.snapshot.ref);
-            if(elementTriggeringFileUpload === "banner-upload") {
+            if (elementTriggeringFileUpload === "banner-upload") {
               newBannerPicURL = url;
               dispatch(profileInfoActions.setBannerPic(newBannerPicURL));
             }
-            if(elementTriggeringFileUpload === 'pfp-upload'){
+            if (elementTriggeringFileUpload === "pfp-upload") {
               newProfilePicURL = url;
               dispatch(profileInfoActions.setProfilePic(newProfilePicURL));
             }
@@ -123,6 +132,15 @@ const EditProfile = (props) => {
   };
   const websiteChangeHandler = (event) => {
     setEnteredWebsite(event.target.value);
+  };
+
+  const deleteBannerImageHandler = () => {
+    if (loadedBannerPic === defaultBanner) {
+      console.log("HEY! This is already the default image there, buddy 🤨");
+    } else {
+      dispatch(profileInfoActions.setBannerPic(defaultBanner));
+      console.log("Removed banner successfully!");
+    }
   };
 
   return (
@@ -158,12 +176,14 @@ const EditProfile = (props) => {
             />
             {/* <button type="button" className={classes['invisible-submit']}>Submit</button> */}
           </label>
-
-          <img
-            className={classes["delete-banner"]}
-            src={removeImageButton}
-            alt="X icon for closing window"
-          />
+          <label>
+            <img
+              className={classes["delete-banner"]}
+              src={removeImageButton}
+              alt="X icon for closing window"
+              onClick={deleteBannerImageHandler}
+            />
+          </label>
         </div>
         <img
           src={loadedBannerPic}
@@ -278,7 +298,7 @@ const EditProfile = (props) => {
         <div className={classes["input-div"]}>
           <input
             ref={websiteInputRef}
-            type="text"
+            type="url"
             id="website"
             value={enteredWebsite}
             className={`${classes.input} ${
