@@ -1,0 +1,39 @@
+.header {
+    display: flex;
+    position: relative;
+    align-items: center;
+    margin: 10px;
+  }
+  
+  .close-button {
+    cursor: pointer;
+    border-radius: 50%;
+    padding: 10px;
+    margin-right: 30px;
+  }
+  
+  .close-button:hover {
+    background: #eeeeee;
+    transition: 0.4s;
+  }
+  
+  .title {
+    font-size: larger;
+    font-weight: 700;
+  }
+  
+  .save-button {
+    position: absolute;
+    right: 6px;
+    border-radius: 20px;
+    border: none;
+    padding: 10px 20px;
+    font-weight: 600;
+    background: #e8e8e8;
+    cursor: pointer;
+    transition: 0.4s;
+  }
+  
+  .save-button:hover {
+    background: #d1d1d1;
+  }

@@ -1,0 +1,18 @@
+.container {
+    position: absolute;
+    bottom: 10%;
+    left: 36%;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+}
+
+input {
+    margin-bottom: 14px;
+}
+
+.character-count {
+    text-align: right;
+}

@@ -4,7 +4,7 @@ import InfoContainer from "./InfoContainer";
 import NameNavHeader from "./NameNavHeader";
 import { useSelector } from "react-redux";
 import PostList from "./PostList";
-import EditProfile from "./EditProfile";
+import EditProfile from "./EditProfile/EditProfile";
 
 const ProfileInfo = () => {
   const [isEditing, setIsEditing] = useState(false);

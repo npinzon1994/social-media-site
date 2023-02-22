@@ -1,0 +1,60 @@
+.banner-container {
+    position: relative;
+  }
+  
+  .banner-pic {
+    height: 200px;
+    max-height: 300px;
+    width: 640px;
+    /* max-width: 800px; */
+  }
+  
+  .banner-overlay-container {
+    display: flex;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    align-items: center;
+  }
+  
+  .replace-banner-image {
+    width: 28px;
+    background: rgba(34, 34, 34, 0.55);
+    margin: 0 12px;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .replace-banner-image:hover {
+    background: rgba(34, 34, 34, 0.7);
+  }
+  
+  .file-upload-label {
+    cursor: pointer;
+  }
+  
+  input[type="file"]{
+    display: none;
+  }
+  
+  .invisible-submit {
+      display: none;
+  }
+  
+  .delete-banner {
+    width: 16px;
+    height: 26px;
+    background: rgba(34, 34, 34, 0.55);
+    margin: 0 12px;
+    padding: 10px 15px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .delete-banner:hover {
+    background: rgba(34, 34, 34, 0.7);
+  }

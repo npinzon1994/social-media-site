@@ -1,0 +1,26 @@
+.replace-profile-pic {
+    position: absolute;
+    left: 79px;
+    top: 44%;
+    width: 28px;
+    background: #e8e8e8;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    background: rgba(34, 34, 34, 0.55);
+    transition: 0.3s;
+  }
+  
+  .replace-profile-pic:hover {
+    background: rgba(34, 34, 34, 0.7);
+  }
+  
+  .profile-pic {
+    border-radius: 50%;
+    border: 5px white solid;
+    height: 160px;
+    width: 160px;
+    position: relative;
+    top: -84px;
+    left: 18px;
+  }
