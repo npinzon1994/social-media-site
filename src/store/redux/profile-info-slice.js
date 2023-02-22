@@ -54,6 +54,9 @@ const profileInfoSlice = createSlice({
     setPosts(state, action) {
       state.posts = action.payload;
     },
+    setNumberOfPosts(state, action) {
+      state.posts = action.payload;
+    },
     setMessageThreads(state, action) {
       state.messageThreads = action.payload;
     },

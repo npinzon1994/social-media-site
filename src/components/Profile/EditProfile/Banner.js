@@ -31,7 +31,7 @@ const Banner = (props) => {
         </label>
       </div>
       <img
-        src={props.loadedBannerPic}
+        src={props.newBannerPic ? props.newBannerPic : props.loadedBannerPic}
         alt="banner pic"
         className={classes["banner-pic"]}
       />

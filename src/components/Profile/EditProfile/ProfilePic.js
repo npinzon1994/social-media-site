@@ -3,11 +3,13 @@ import classes from './ProfilePic.module.css';
 import addImageButton from "../../../assets/Profile/add-pic.svg";
 
 const ProfilePic = (props) => {
+  
   return (
     <div className={classes["profile-pic-container"]}>
+        {console.log("CURRENT PROFILE PIC IN EDIT WINDOW:", props.newPfp)}
         <img
           className={classes["profile-pic"]}
-          src={props.loadedProfilePic}
+          src={props.newPfp ? props.newPfp : props.loadedProfilePic}
           alt="default pfp"
         />
         <label htmlFor="pfp-upload" className={classes["file-upload-label"]}>

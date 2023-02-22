@@ -5,11 +5,9 @@ import { createUserWithEmailAndPassword, AuthErrorCodes } from "firebase/auth";
 import { auth } from "../firebase";
 import { setAuthToken, setTokenExpiration } from "../util/auth";
 import { setInitialUserInfo } from "../util/profile";
-
-export const blankPfp =
-  "https://firebasestorage.googleapis.com/v0/b/social-media-app-2cfba.appspot.com/o/blank-profile-pic.svg?alt=media&token=54c70d5a-66a1-4b7f-bcf1-addf2064e31f";
-export const defaultBanner =
-  "https://firebasestorage.googleapis.com/v0/b/social-media-app-2cfba.appspot.com/o/default-banner.png?alt=media&token=374c39af-1dfe-4537-b4e3-5fbf2eef2149";
+import { userDatabaseURL } from "../util/http";
+import { defaultProfilePic } from "../util/profile";
+import { defaultBannerPic } from "../util/profile";
 
 const CreateNewAccount = () => {
   return (
@@ -52,30 +50,27 @@ export async function action({ request }) {
     const initialUserInfo = getInitialUserInfo();
     const { id, username, displayName, dateJoined } = initialUserInfo;
 
-    const postResponse = await fetch(
-      "https://social-media-app-2cfba-default-rtdb.firebaseio.com/users.json",
-      {
-        method: "POST",
-        body: JSON.stringify({
-          id,
-          username,
-          displayName,
-          profilePic: blankPfp,
-          bannerPic: defaultBanner,
-          bio: "",
-          website: "",
-          dateJoined,
-          following: 0,
-          followers: 0,
-          posts: [],
-          numberOfPosts: 0,
-          messageThreads: [],
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const postResponse = await fetch(userDatabaseURL, {
+      method: "POST",
+      body: JSON.stringify({
+        id,
+        username,
+        displayName,
+        profilePic: defaultProfilePic,
+        bannerPic: defaultBannerPic,
+        bio: "",
+        website: "",
+        dateJoined,
+        following: 0,
+        followers: 0,
+        posts: [],
+        numberOfPosts: 0,
+        messageThreads: [],
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
     if (!postResponse.ok) {
       throw json({ message: "Something went wrong!" }, { status: 500 });

@@ -4,6 +4,7 @@ import classes from "./Input.module.css";
 const Input = (props) => {
   const isInput = props.element === "input";
   const isTextarea = props.element === "textarea";
+
   return (
     <div className={classes["input-div"]}>
       {isInput ? (
@@ -11,15 +12,12 @@ const Input = (props) => {
           {...props.register}
           type={props.type || "text"}
           id={props.id}
-          className={`${classes.input} ${
-            props.afterFocus && classes["after-focus"]
-          }`}
+          className={`${classes.input} ${props.afterFocus && classes["after-focus"]}`}
           maxLength={props.maxLength}
         />
       ) : (
         ""
       )}
-
       {isTextarea ? (
         <textarea
           {...props.register}
@@ -34,7 +32,6 @@ const Input = (props) => {
       ) : (
         ""
       )}
-
       <div className={classes["placeholder-character-div"]}>
         <label htmlFor={props.id} className={classes.placeholder}>
           {props.placeholder}

@@ -6,10 +6,9 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 
-let newBannerPicURL = "";
-let newProfilePicURL = "";
-
 const useSubmitImage = () => {
+  const [pfpState, setPfp] = useState();
+  const [bannerState, setBanner] = useState();
   const [percent, setPercent] = useState(0);
   const submitImageToFirebase = useCallback(async (file, sourceElement) => {
     console.log("Start of upload...");
@@ -38,13 +37,11 @@ const useSubmitImage = () => {
           //download url
           const url = await getDownloadURL(uploadTask.snapshot.ref);
           if (sourceElement === "banner-upload") {
-            newBannerPicURL = url;
+            setBanner(url);
           }
           if (sourceElement === "pfp-upload") {
-            newProfilePicURL = url;
+            setPfp(url);
           }
-          console.log("SUCCESSFULLY UPLOADED BANNER IMAGE!!");
-          console.log("New Banner Pic URL:", newBannerPicURL);
         }
       );
     } catch (error) {
@@ -55,8 +52,8 @@ const useSubmitImage = () => {
   return {
     percent,
     submitImageToFirebase,
-    newBannerPicURL,
-    newProfilePicURL,
+    newBannerPic: bannerState,
+    newProfilePic: pfpState,
   };
 };
 

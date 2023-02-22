@@ -1,0 +1,1 @@
+export const userDatabaseURL = "https://social-media-app-2cfba-default-rtdb.firebaseio.com/users.json";
