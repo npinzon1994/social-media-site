@@ -7,6 +7,9 @@ import { truncate } from "../../util/profile";
 import { NavLink, useRouteLoaderData } from "react-router-dom";
 import { profileInfoActions } from "../../store/redux/profile-info-slice";
 
+const urlHasHttp = (url) => url.includes("http://") || url.includes("https://");
+const appendHttp = (url) => `http://${url}`;
+
 const InfoContainer = () => {
   const displayName = useSelector((state) => state.profileInfo.displayName);
   const userName = useSelector((state) => state.profileInfo.username);
@@ -20,8 +23,8 @@ const InfoContainer = () => {
   const dispatch = useDispatch();
 
   const userLoggedInId = localStorage.getItem("LOGIN_ID");
-  for(const key in loadedUserData) {
-    if(loadedUserData[key].id === userLoggedInId){
+  for (const key in loadedUserData) {
+    if (loadedUserData[key].id === userLoggedInId) {
       //take everything from loaded data and store inside redux
       console.log("Loaded ID: ", loadedUserData[key].id);
       dispatch(profileInfoActions.setId(loadedUserData[key].id));
@@ -30,22 +33,26 @@ const InfoContainer = () => {
       dispatch(profileInfoActions.setUsername(loadedUserData[key].username));
 
       console.log("Loaded Display Name: ", loadedUserData[key].displayName);
-      dispatch(profileInfoActions.setDisplayName(loadedUserData[key].displayName));
+      dispatch(
+        profileInfoActions.setDisplayName(loadedUserData[key].displayName)
+      );
 
       console.log("Loaded Date Joined: ", loadedUserData[key].dateJoined);
-      dispatch(profileInfoActions.setDateJoined(loadedUserData[key].dateJoined));
-      
+      dispatch(
+        profileInfoActions.setDateJoined(loadedUserData[key].dateJoined)
+      );
+
       console.log("Loaded Profile Pic: ", loadedUserData[key].profilePic);
-      dispatch(profileInfoActions.setProfilePic(loadedUserData[key].profilePic));
+      dispatch(
+        profileInfoActions.setProfilePic(loadedUserData[key].profilePic)
+      );
 
       console.log("Loaded Banner Pic: ", loadedUserData[key].bannerPic);
       dispatch(profileInfoActions.setBannerPic(loadedUserData[key].bannerPic));
-      
-      
     }
   }
-  
   localStorage.removeItem("LOGIN_ID");
+
   return (
     <div className={classes["main-container"]}>
       <div className={classes["name-container"]}>
@@ -56,16 +63,18 @@ const InfoContainer = () => {
         <span>{bio}</span>
       </div>
       <ul className={classes.list}>
-        <li>
-          <img src={linkIcon} alt="link icon" />
-          {website !== "" ? (
-            <a href={website} target="_blank" rel="noreferrer">
+        {website && (
+          <li>
+            <img src={linkIcon} alt="link icon" />
+            <a
+              href={!urlHasHttp(website) ? appendHttp(website) : website}
+              target="_blank"
+              rel="noreferrer"
+            >
               {website}
             </a>
-          ) : (
-            "No Website"
-          )}
-        </li>
+          </li>
+        )}
         <li>
           <img src={calendarIcon} alt="calendar icon" />
           Joined {dateJoined}

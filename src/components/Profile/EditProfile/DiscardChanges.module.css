@@ -1,0 +1,91 @@
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 60;
+  background-color: rgba(0, 0, 0, 0.75);
+}
+
+.modal {
+  position: fixed;
+  top: 30vh;
+  /* bottom: 34%; */
+  left: calc(50% - 11rem);
+  width: 100%;
+  max-width: 280px;
+  /* height: 100%; */
+  height: 210px;
+  background-color: white;
+  padding: 2rem;
+  border-radius: 14px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  z-index: 90;
+  animation: slide-down 300ms ease-out forwards;
+  overflow: hidden;
+}
+
+.inner-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-size: 16pt;
+  font-weight: 700;
+  margin-bottom: 9px;
+}
+
+.message {
+  margin-bottom: 19px;
+}
+
+.button-div {
+  display: flex;
+  flex-direction: column;
+  padding: 0 6px;
+}
+
+.discard-button {
+  padding: 18px;
+  border-radius: 28px;
+  border: none;
+  background: rgb(253, 46, 46);
+  color: white;
+  font-size: medium;
+  font-weight: 600;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.discard-button:hover {
+  background: rgb(224, 41, 41);
+}
+
+.cancel-button {
+  padding: 18px;
+  border-radius: 28px;
+  border: 1px #c9c9c9 solid;
+  font-size: medium;
+  font-weight: 600;
+  cursor: pointer;
+  background: none;
+  transition: 0.3s;
+}
+
+.cancel-button:hover {
+  background: #f3f3f3;
+}
+
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-3rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

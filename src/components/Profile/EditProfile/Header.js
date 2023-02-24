@@ -12,6 +12,9 @@ const Header = (props) => {
         className={classes["close-button"]}
       />
       <span className={classes.title}>Edit Profile</span>
+      <button className={classes['save-button']} style={{right: "90px"}} onClick={props.onOpenDiscardModal}>
+        Open Discard Modal
+      </button>
       <button className={classes["save-button"]} form={props.form}>
         Save
       </button>

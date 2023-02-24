@@ -54,6 +54,7 @@ const useSubmitImage = () => {
     submitImageToFirebase,
     newBannerPic: bannerState,
     newProfilePic: pfpState,
+    setBanner
   };
 };
 

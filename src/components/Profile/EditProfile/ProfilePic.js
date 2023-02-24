@@ -6,7 +6,6 @@ const ProfilePic = (props) => {
   
   return (
     <div className={classes["profile-pic-container"]}>
-        {console.log("CURRENT PROFILE PIC IN EDIT WINDOW:", props.newPfp)}
         <img
           className={classes["profile-pic"]}
           src={props.newPfp ? props.newPfp : props.loadedProfilePic}

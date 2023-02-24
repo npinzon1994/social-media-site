@@ -14,7 +14,7 @@ const ModalOverlay = (props) => {
   );
 };
 
-const portalElement = document.getElementById("overlays");
+const portalElement = document.getElementById("inner-overlays");
 
 const Modal = (props) => {
   return (
@@ -24,7 +24,7 @@ const Modal = (props) => {
         portalElement
       )}
       {createPortal(
-        <ModalOverlay onClose={props.onClose}>{props.children}</ModalOverlay>,
+        <ModalOverlay onClose={props.onClose} className={props.className}>{props.children}</ModalOverlay>,
         portalElement
       )}
     </>

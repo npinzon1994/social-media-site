@@ -13,25 +13,41 @@ const ProfileInfo = () => {
 
   const openEditProfileModal = () => {
     setIsEditing(true);
-  }
+  };
 
   const closeEditProfileModal = () => {
+    //if any of the info changed, show popup
+    //else, close the window
+
     setIsEditing(false);
-  }
+  };
 
   return (
     <>
-    {isEditing && <EditProfile onClose={closeEditProfileModal}/>}
-    <div className={classes.container}>
-      <NameNavHeader />
-      <div className={classes["banner-container"]}>
-        <img src={bannerPic} alt="banner pic" />
+      {isEditing && (
+        <EditProfile
+          onClose={closeEditProfileModal}
+        />
+      )}
+      <div className={classes.container}>
+        <NameNavHeader />
+        <div className={classes["banner-container"]}>
+          <img src={bannerPic} alt="banner pic" />
+        </div>
+        <img
+          src={profilePic}
+          alt="Profile pic"
+          className={classes["profile-pic"]}
+        />
+        <button
+          className={classes["edit-button"]}
+          onClick={openEditProfileModal}
+        >
+          Edit profile
+        </button>
+        <InfoContainer />
+        <PostList />
       </div>
-      <img src={profilePic} alt="Profile pic" className={classes['profile-pic']}/>
-      <button className={classes['edit-button']} onClick={openEditProfileModal}>Edit profile</button>
-      <InfoContainer />
-      <PostList />
-    </div>
     </>
   );
 };

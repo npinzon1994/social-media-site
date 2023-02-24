@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import classes from "./EditProfile.module.css";
 import Modal from "../../UI/Modal";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,55 +16,32 @@ import useSubmitImage from "../../../hooks/use-submit-image";
 import { database } from "../../../firebase";
 import { update, ref as databaseRef } from "firebase/database";
 import useFirebaseId from "../../../hooks/use-firebase-id";
-import * as zz from "zod";
+import DiscardChanges from "./DiscardChanges";
 
-//custom error map for URL validation
-const urlErrorMap = (error, ctx) => {
-  switch (error.code) {
-    case zz.ZodIssueCode.invalid_type:
-      if (error.expected === "string") {
-        return { message: "URL needs to be a string!" };
-      }
-      break;
-    case zz.ZodIssueCode.invalid_string:
-      const params = error.params || {};
-      if (
-        /^(http(s):\/\/.)[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)$/g.test(
-          params.website
-        )
-      ) {
-        break;
-      } else {
-        return { message: `${params.website} is an invalid URL!` };
-      }
-  }
+//form validation
+const urlRegex = new RegExp(
+  "^((https?://)?(www.)?[-a-zA-z0-9@:._+~#=]{2,256}.[a-z]{2,6}([-a-zA-z0-9@:%_+.~#?&//=]*))$"
+);
+const isValidUrl = (url) => urlRegex.test(url);
 
-  return {message: ctx.defaultError};
-};
-
-//zod schema for validation
 const schema = z.object({
   displayName: string().min(1, { message: "Display name required!" }),
   username: string().min(1, { message: "Username required!" }),
   bio: string().optional(),
-  website: string({errorMap: urlErrorMap}).optional().or(z.literal("")),
+  website: z
+    .string()
+    .refine(isValidUrl, (url) => ({
+      message: `${url} is not a valid URL!`,
+    }))
+    .optional()
+    .or(z.literal("")),
 });
 
-const result = schema.safeParse({
-  displayName: "",
-  username: null,
-  bio: "my bio yayyyy",
-  website: "nikkipinzon.com"
-})
-
-if(!result.success){
-  console.log("RESULT ERROR ISSUES", result.error.issues);
-}
-
-//helper function(s)
 const checkInput = (value) => value.length !== 0;
 
 const EditProfile = (props) => {
+  const isMounted = useRef(false);
+
   //Info loaded from Redux Store
   const userId = useSelector((state) => state.profileInfo.id);
   const loadedBannerPic = useSelector((state) => state.profileInfo.bannerPic);
@@ -76,9 +53,12 @@ const EditProfile = (props) => {
   const loadedBio = useSelector((state) => state.profileInfo.bio);
   const loadedWebsite = useSelector((state) => state.profileInfo.website);
 
+  //hooks
+  const [isEditing, setIsEditing] = useState(false);
+  const [hasDataChanged, setHasDataChanged] = useState(null);
   const dispatch = useDispatch();
   const { file, sourceElement, uploadImage } = useUpload();
-  const { submitImageToFirebase, newBannerPic, newProfilePic } =
+  const { submitImageToFirebase, setBanner, newBannerPic, newProfilePic } =
     useSubmitImage();
   const { getFirebaseId } = useFirebaseId();
 
@@ -92,6 +72,12 @@ const EditProfile = (props) => {
     resolver: zodResolver(schema),
   });
 
+  //values to be checked before closing form
+  const displayNameValue = getValues("displayName");
+  const usernameValue = getValues("username");
+  const bioValue = getValues("bio");
+  const websiteValue = getValues("website");
+
   const inputChangeMonitors = {
     watchDisplayName: watch("displayName"),
     watchUsername: watch("username"),
@@ -103,21 +89,22 @@ const EditProfile = (props) => {
     inputChangeMonitors;
 
   useEffect(() => {
-    submitImageToFirebase(file, sourceElement);
+    console.log("Looking for file...");
+    if (!file) {
+      console.log("NO FILE FOUND", file);
+    } else {
+      submitImageToFirebase(file, sourceElement);
+    }
   }, [file, sourceElement, submitImageToFirebase]);
 
   const deleteBannerImageHandler = () => {
     if (loadedBannerPic === defaultBannerPic) {
       console.log("HEY! This is already the default image there, buddy 🤨");
     } else {
-      //delete banner on this line
+      setBanner(defaultBannerPic);
       console.log("Removed banner successfully!");
     }
   };
-
-  const missingHttp = (url) =>
-    !url.startsWith("http://") || !url.startsWith("https://");
-  const amendedUrl = `http://${getValues("website")}`;
 
   const submitFormHandler = async (data) => {
     console.log("Submitting...");
@@ -145,67 +132,112 @@ const EditProfile = (props) => {
     update(databaseRef(database, `/users/${firebaseId}`), updateObject);
   };
 
-  return (
-    <Modal onClose={props.onClose}>
-      <Header onClose={props.onClose} form="edit-form" />
-      <Banner
-        onUploadImage={uploadImage}
-        onDeleteBanner={deleteBannerImageHandler}
-        loadedBannerPic={loadedBannerPic}
-        newBannerPic={newBannerPic}
-      />
-      <ProfilePic
-        onUploadImage={uploadImage}
-        loadedProfilePic={loadedProfilePic}
-        newPfp={newProfilePic}
-      />
+  const openDiscardModal = () => {
+    setIsEditing(true);
+  };
 
-      <form
-        className={classes.form}
-        onSubmit={handleSubmit(submitFormHandler)}
-        id="edit-form"
-      >
-        <Input
-          element="input"
-          register={register("displayName")}
-          type="text"
-          id="display-name"
-          afterFocus={checkInput(watchDisplayName)}
-          maxLength="50"
-          placeholder="Display Name"
-          charactersEntered={watchDisplayName.length}
+  const closeDiscardModal = () => {
+    setIsEditing(false);
+  };
+
+  useEffect(() => {
+    // if (isMounted.current) {
+    //   if (hasDataChanged === true) {
+    //     console.log("DATA ALREADY CHANGED!");
+    //   }
+    //   if (hasDataChanged === false) {
+    //     console.log("NOT CHANGED YET");
+    //     setHasDataChanged(true);
+    //   }
+    //   if(hasDataChanged === null){
+    //     console.log("initial useEffect call -- changing from Null to FALSE");
+    //     setHasDataChanged(false);
+    //   }
+    // } else {
+    //   isMounted.current = true;
+    // }
+    console.log("updating hasDataChanged state...");
+    setHasDataChanged(true);
+  }, [
+    displayNameValue,
+    usernameValue,
+    bioValue,
+    websiteValue,
+    newBannerPic,
+    newProfilePic,
+    hasDataChanged,
+    setHasDataChanged,
+  ]);
+
+  
+  return (
+    <>
+      {isEditing && <DiscardChanges onClose={closeDiscardModal} />}
+      <Modal onClose={props.onClose}>
+        <Header
+          onClose={props.onClose}
+          form="edit-form"
+          onOpenDiscardModal={openDiscardModal}
         />
-        <Input
-          element="input"
-          register={register("username")}
-          type="text"
-          id="username"
-          afterFocus={checkInput(watchUsername)}
-          maxLength="20"
-          placeholder="Username"
-          charactersEntered={watchUsername.length}
+        <Banner
+          onUploadImage={uploadImage}
+          onDeleteBanner={deleteBannerImageHandler}
+          loadedBannerPic={loadedBannerPic}
+          newBannerPic={newBannerPic}
         />
-        <Input
-          element="textarea"
-          register={register("bio")}
-          id="bio"
-          afterFocus={checkInput(watchBio)}
-          maxLength="160"
-          rows="4"
-          placeholder="Bio"
-          charactersEntered={watchBio.length}
+        <ProfilePic
+          onUploadImage={uploadImage}
+          loadedProfilePic={loadedProfilePic}
+          newPfp={newProfilePic}
         />
-        <Input
-          element="input"
-          register={register("website")}
-          id="website"
-          afterFocus={checkInput(watchWebsite)}
-          maxLength="100"
-          placeholder="Website"
-          charactersEntered={watchWebsite.length}
-        />
-      </form>
-    </Modal>
+
+        <form
+          className={classes.form}
+          onSubmit={handleSubmit(submitFormHandler)}
+          id="edit-form"
+        >
+          <Input
+            element="input"
+            register={register("displayName")}
+            type="text"
+            id="display-name"
+            afterFocus={checkInput(watchDisplayName)}
+            maxLength="50"
+            placeholder="Display Name"
+            charactersEntered={watchDisplayName.length}
+          />
+          <Input
+            element="input"
+            register={register("username")}
+            type="text"
+            id="username"
+            afterFocus={checkInput(watchUsername)}
+            maxLength="20"
+            placeholder="Username"
+            charactersEntered={watchUsername.length}
+          />
+          <Input
+            element="textarea"
+            register={register("bio")}
+            id="bio"
+            afterFocus={checkInput(watchBio)}
+            maxLength="160"
+            rows="4"
+            placeholder="Bio"
+            charactersEntered={watchBio.length}
+          />
+          <Input
+            element="input"
+            register={register("website")}
+            id="website"
+            afterFocus={checkInput(watchWebsite)}
+            maxLength="100"
+            placeholder="Website"
+            charactersEntered={watchWebsite.length}
+          />
+        </form>
+      </Modal>
+    </>
   );
 };
 
