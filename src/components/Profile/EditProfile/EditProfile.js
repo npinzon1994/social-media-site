@@ -1,8 +1,9 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect } from "react";
 import classes from "./EditProfile.module.css";
 import Modal from "../../UI/Modal";
 import { useDispatch, useSelector } from "react-redux";
 import { profileInfoActions } from "../../../store/redux/profile-info-slice";
+import { showHideModalActions } from "../../../store/redux/show-hide-modal-slice";
 import { defaultBannerPic } from "../../../util/profile";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -40,8 +41,6 @@ const schema = z.object({
 const checkInput = (value) => value.length !== 0;
 
 const EditProfile = (props) => {
-  const isMounted = useRef(false);
-
   //Info loaded from Redux Store
   const userId = useSelector((state) => state.profileInfo.id);
   const loadedBannerPic = useSelector((state) => state.profileInfo.bannerPic);
@@ -53,9 +52,9 @@ const EditProfile = (props) => {
   const loadedBio = useSelector((state) => state.profileInfo.bio);
   const loadedWebsite = useSelector((state) => state.profileInfo.website);
 
+  const isDiscarding = useSelector((state) => state.showHideModal.isDiscarding);
+
   //hooks
-  const [isEditing, setIsEditing] = useState(false);
-  const [hasDataChanged, setHasDataChanged] = useState(null);
   const dispatch = useDispatch();
   const { file, sourceElement, uploadImage } = useUpload();
   const { submitImageToFirebase, setBanner, newBannerPic, newProfilePic } =
@@ -72,12 +71,6 @@ const EditProfile = (props) => {
     resolver: zodResolver(schema),
   });
 
-  //values to be checked before closing form
-  const displayNameValue = getValues("displayName");
-  const usernameValue = getValues("username");
-  const bioValue = getValues("bio");
-  const websiteValue = getValues("website");
-
   const inputChangeMonitors = {
     watchDisplayName: watch("displayName"),
     watchUsername: watch("username"),
@@ -85,16 +78,25 @@ const EditProfile = (props) => {
     watchWebsite: watch("website"),
   };
 
+  //checking if values changed so we know whether or not to open Discard Modal
+  const newDisplayName = getValues("displayName");
+  const newUsername = getValues("username");
+  const newBio = getValues("bio");
+  const newWebsite = getValues("website");
+
+  const displayNameChanged = loadedDisplayName !== newDisplayName;
+  const usernameChanged = loadedUsername !== newUsername;
+  const bioChanged = loadedBio !== newBio;
+  const websiteChanged = loadedWebsite !== newWebsite;
+  const bannerPicChanged = loadedBannerPic !== newBannerPic;
+  const profilePicChanged = loadedProfilePic !== newProfilePic;
+
   const { watchDisplayName, watchUsername, watchBio, watchWebsite } =
     inputChangeMonitors;
 
+  //
   useEffect(() => {
-    console.log("Looking for file...");
-    if (!file) {
-      console.log("NO FILE FOUND", file);
-    } else {
-      submitImageToFirebase(file, sourceElement);
-    }
+    submitImageToFirebase(file, sourceElement);
   }, [file, sourceElement, submitImageToFirebase]);
 
   const deleteBannerImageHandler = () => {
@@ -107,77 +109,73 @@ const EditProfile = (props) => {
   };
 
   const submitFormHandler = async (data) => {
-    console.log("Submitting...");
-    console.log(data);
+    //only want to submit if any info actually changed
+    if (
+      displayNameChanged ||
+      usernameChanged ||
+      bioChanged ||
+      websiteChanged ||
+      bannerPicChanged ||
+      profilePicChanged
+    ) {
+      console.log("Submitting...");
+      dispatch(showHideModalActions.setIsSubmitting(true));
+      //this is where we overwrite redux store
+      newProfilePic &&
+        dispatch(profileInfoActions.setProfilePic(newProfilePic));
+      newBannerPic && dispatch(profileInfoActions.setBannerPic(newBannerPic));
+      dispatch(profileInfoActions.setDisplayName(getValues("displayName")));
+      dispatch(profileInfoActions.setUsername(getValues("username")));
+      dispatch(profileInfoActions.setBio(getValues("bio")));
+      dispatch(profileInfoActions.setWebsite(getValues("website")));
 
-    //this is where we overwrite redux store
-    newProfilePic && dispatch(profileInfoActions.setProfilePic(newProfilePic));
-    newBannerPic && dispatch(profileInfoActions.setBannerPic(newBannerPic));
-    dispatch(profileInfoActions.setDisplayName(getValues("displayName")));
-    dispatch(profileInfoActions.setUsername(getValues("username")));
-    dispatch(profileInfoActions.setBio(getValues("bio")));
-    dispatch(profileInfoActions.setWebsite(getValues("website")));
+      //send http request here
+      const updateObject = {
+        profilePic: newProfilePic || loadedProfilePic,
+        bannerPic: newBannerPic || loadedBannerPic,
+        displayName: getValues("displayName"),
+        username: getValues("username"),
+        bio: getValues("bio"),
+        website: getValues("website"),
+      };
 
-    //send http request here
-    const updateObject = {
-      profilePic: newProfilePic || loadedProfilePic,
-      bannerPic: newBannerPic || loadedBannerPic,
-      displayName: getValues("displayName"),
-      username: getValues("username"),
-      bio: getValues("bio"),
-      website: getValues("website"),
-    };
-
-    const firebaseId = await getFirebaseId(userId);
-    update(databaseRef(database, `/users/${firebaseId}`), updateObject);
+      const firebaseId = await getFirebaseId(userId);
+      update(databaseRef(database, `/users/${firebaseId}`), updateObject);
+      dispatch(showHideModalActions.setIsSubmitting(false));
+      dispatch(showHideModalActions.setIsEditing(false));
+    }
   };
 
-  const openDiscardModal = () => {
-    setIsEditing(true);
+  const openDiscardOrCloseEdit = () => {
+    if (
+      displayNameChanged ||
+      usernameChanged ||
+      bioChanged ||
+      websiteChanged ||
+      bannerPicChanged ||
+      profilePicChanged
+    ) {
+      console.log("SOMETHING CHANGED");
+      console.log("Old Profile Pic:", loadedProfilePic);
+      console.log("New Profile Pic:", newProfilePic);
+      dispatch(showHideModalActions.setIsDiscarding(true));
+    } else {
+      dispatch(showHideModalActions.setIsEditing(false));
+    }
   };
 
   const closeDiscardModal = () => {
-    setIsEditing(false);
+    dispatch(showHideModalActions.setIsDiscarding(false));
   };
 
-  useEffect(() => {
-    // if (isMounted.current) {
-    //   if (hasDataChanged === true) {
-    //     console.log("DATA ALREADY CHANGED!");
-    //   }
-    //   if (hasDataChanged === false) {
-    //     console.log("NOT CHANGED YET");
-    //     setHasDataChanged(true);
-    //   }
-    //   if(hasDataChanged === null){
-    //     console.log("initial useEffect call -- changing from Null to FALSE");
-    //     setHasDataChanged(false);
-    //   }
-    // } else {
-    //   isMounted.current = true;
-    // }
-    console.log("updating hasDataChanged state...");
-    setHasDataChanged(true);
-  }, [
-    displayNameValue,
-    usernameValue,
-    bioValue,
-    websiteValue,
-    newBannerPic,
-    newProfilePic,
-    hasDataChanged,
-    setHasDataChanged,
-  ]);
-
-  
   return (
     <>
-      {isEditing && <DiscardChanges onClose={closeDiscardModal} />}
-      <Modal onClose={props.onClose}>
+      {isDiscarding && <DiscardChanges onClose={closeDiscardModal} />}
+      <Modal onClose={openDiscardOrCloseEdit}>
         <Header
-          onClose={props.onClose}
+          onClose={openDiscardOrCloseEdit}
           form="edit-form"
-          onOpenDiscardModal={openDiscardModal}
+          onOpenDiscardModal={openDiscardOrCloseEdit}
         />
         <Banner
           onUploadImage={uploadImage}

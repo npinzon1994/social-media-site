@@ -1,4 +1,5 @@
 import { useCallback, useState } from "react";
+import { useSelector } from "react-redux";
 import { storage } from "../firebase";
 import {
   getDownloadURL,
@@ -7,14 +8,17 @@ import {
 } from "firebase/storage";
 
 const useSubmitImage = () => {
-  const [pfpState, setPfp] = useState();
-  const [bannerState, setBanner] = useState();
+  const loadedBannerPic = useSelector(state => state.profileInfo.bannerPic);
+  const loadedProfilePic = useSelector(state => state.profileInfo.profilePic);
+  
+  const [pfpState, setPfp] = useState(loadedProfilePic);
+  const [bannerState, setBanner] = useState(loadedBannerPic);
   const [percent, setPercent] = useState(0);
   const submitImageToFirebase = useCallback(async (file, sourceElement) => {
     console.log("Start of upload...");
 
     try {
-      if (file === "") {
+      if (!file) {
         throw new Error(
           `${typeof file} is not a supported file type! Please upload either .png or .jpg.`
         );
