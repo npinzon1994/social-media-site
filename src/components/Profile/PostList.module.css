@@ -1,9 +1,17 @@
 .list {
-    padding-left: 0;
-    border-top: 1px #e8e8e8 solid;
+  padding-left: 0;
+  border-top: 1px #e8e8e8 solid;
 }
 
-.empty-message {
-    text-align: center;
-    color: rgb(136, 124, 124);
+.message-container {
+    display: flex;
+    flex-direction: column;
+    margin: 2rem 0 2rem 4rem;
+}
+
+
+.title {
+    font-size: x-large;
+    font-weight: 700;
+    margin-bottom: 4px;
 }

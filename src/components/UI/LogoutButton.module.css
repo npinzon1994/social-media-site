@@ -1,0 +1,111 @@
+.wrapper {
+  position: absolute;
+  width: 300px;
+  /* height: 50px; */
+  z-index: 15;
+  bottom: 5rem;
+  right: 1rem;
+}
+
+/*Popup container for logout menu item*/
+.popup-container {
+  position: absolute;
+  width: 246px;
+  height: 50px;
+  z-index: 30;
+  transition: 0.3s;
+  bottom: 18px;
+  right: -10px;
+}
+
+.item-body {
+  position: absolute;
+  background-color: white;
+  width: 246px;
+  height: 50px;
+  bottom: 0;
+  z-index: 45;
+  border-radius: 16px;
+  box-shadow: 0 0 4px gray;
+  transition: 0.3s;
+}
+
+.item-body::before {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  top: 100%;
+  left: 45%;
+  border: 0.6rem solid transparent;
+  border-top: none;
+  transform: rotate(180deg);
+  border-bottom-color: #fff;
+  filter: drop-shadow(0 -0.1rem 0.12rem rgba(0, 0, 0, 0.2));
+  transition: 0.3s;
+}
+
+.item-text {
+    text-align: center;
+    position: absolute;
+    z-index: 70;
+    top: 9px;
+    font-weight: 700;
+    font-size: medium;
+    width: 100%;
+    padding: 4px 0 7px 0;
+    border: none;
+    background: transparent;
+    border-radius: 4px;
+    transition: 0.3s;
+    cursor: pointer;
+    transition: 0.3s;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.item-text:hover {
+    background: #e8e8e8;
+}
+
+/*Fancy looking logout button*/
+.container-button {
+  position: absolute;
+  right: 0;
+  display: flex;
+  align-items: center;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 10px 14px;
+  border-radius: 30px;
+  transition: 0.3s;
+}
+
+.container-button:hover {
+  background: #e8e8e8;
+}
+
+.profile-pic {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.name-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.display-name {
+  font-weight: 700;
+  margin-bottom: 3px;
+}
+
+.username {
+  color: rgb(136, 124, 124);
+}
+
+.three-dots {
+  margin-left: 18px;
+}

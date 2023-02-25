@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink, Form } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import classes from "./SidebarNavigation.module.css";
 import siteLogo from "../../assets/site-logo.png";
 import homeIcon from "../../assets/Sidebar/home.svg";
@@ -7,15 +7,19 @@ import notificationsIcon from "../../assets/Sidebar/alert.svg";
 import messagesIcon from "../../assets/Sidebar/message.svg";
 import profileIcon from "../../assets/Sidebar/profile.svg";
 import accountIcon from "../../assets/Sidebar/settings.svg";
+import LogoutButton from "./LogoutButton";
 
 const SidebarNavigation = () => {
   return (
     <div className={classes.container}>
-
-      
-        <ul className={classes.list}>
-          <li><img src={siteLogo} className={classes.icon} alt="site logo" /></li>
-          <li>
+      <ul className={classes.list}>
+        <li className={classes["list-item"]}>
+          <div className={classes["link-wrapper"]}>
+            <img src={siteLogo} className={classes.icon} alt="site logo" />
+          </div>
+        </li>
+        <li className={classes["list-item"]}>
+          <div className={classes["link-wrapper"]}>
             <img className={classes.icon} src={homeIcon} alt="home icon" />
             <NavLink
               to="home"
@@ -25,8 +29,10 @@ const SidebarNavigation = () => {
             >
               Home
             </NavLink>
-          </li>
-          <li>
+          </div>
+        </li>
+        <li className={classes["list-item"]}>
+          <div className={classes["link-wrapper"]}>
             <img
               className={classes.icon}
               src={notificationsIcon}
@@ -40,59 +46,54 @@ const SidebarNavigation = () => {
             >
               Notifications
             </NavLink>
-          </li>
-          <li>
-            <img
-              className={classes.icon}
-              src={messagesIcon}
-              alt="messages icon"
-            />
-            <NavLink
-              to="messaging"
-              className={({ isActive }) =>
-                isActive ? classes.active : classes.inactive
-              }
-            >
-              Messages
-            </NavLink>
-          </li>
-          <li>
-            <img
-              className={classes.icon}
-              src={profileIcon}
-              alt="profile icon"
-            />
-            <NavLink
-              to="profile"
-              className={({ isActive }) =>
-                isActive ? classes.active : classes.inactive
-              }
-            >
-              Profile
-            </NavLink>
-          </li>
-          <li>
-            <img
-              className={classes.icon}
-              src={accountIcon}
-              alt="account icon"
-            />
-            <NavLink
-              to="account"
-              className={({ isActive }) =>
-                isActive ? classes.active : classes.inactive
-              }
-            >
-              Account
-            </NavLink>
-          </li>
-        </ul>
-        <Form action="logout" method="post">
-          <button className={classes["sign-out"]}>
-            Sign Out
-          </button>
-        </Form>
-
+          </div>
+        </li>
+        <li className={classes["list-item"]}>
+        <div className={classes["link-wrapper"]}>
+          <img
+            className={classes.icon}
+            src={messagesIcon}
+            alt="messages icon"
+          />
+          <NavLink
+            to="messaging"
+            className={({ isActive }) =>
+              isActive ? classes.active : classes.inactive
+            }
+          >
+            Messages
+          </NavLink>
+          </div>
+        </li>
+        <li className={classes["list-item"]}>
+        <div className={classes["link-wrapper"]}>
+          <img className={classes.icon} src={profileIcon} alt="profile icon" />
+          <NavLink
+            to="profile"
+            className={({ isActive }) =>
+              isActive ? classes.active : classes.inactive
+            }
+          >
+            Profile
+          </NavLink>
+          </div>
+        </li>
+        <li className={classes["list-item"]}>
+        <div className={classes["link-wrapper"]}>
+          <img className={classes.icon} src={accountIcon} alt="account icon" />
+          <NavLink
+            to="account"
+            className={({ isActive }) =>
+              isActive ? classes.active : classes.inactive
+            }
+          >
+            Account
+          </NavLink>
+          </div>
+        </li>
+      </ul>
+      <button className={classes["new-post"]}>Post</button>
+      <LogoutButton />
     </div>
   );
 };

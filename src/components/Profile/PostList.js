@@ -1,16 +1,30 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import media from "../../assets/Posts/media-placeholder.jpg";
-import placeholder from "../../assets/Posts/placeholder-img.png";
 import Post from "../Posts/Post";
 import classes from "./PostList.module.css";
 import { truncate } from "../../util/profile";
+import { replies } from "./dummy-posts";
+import media from "../../assets/Posts/media-placeholder.jpg";
+import placeholder from "../../assets/Posts/placeholder-img.png";
 
 const getPostDate = (date) => {
   const month = date.toLocaleString("default", { month: "short" });
   const day = date.toLocaleString("numeric", { day: "2-digit" });
   const year = date.getFullYear();
   return `${month} ${day}, ${year}`;
+};
+
+const EmptyPostMessage = () => {
+  const username = useSelector((state) => state.profileInfo.username);
+
+  return (
+    <div className={classes["message-container"]}>
+      <span className={classes.title}>{`@${username} hasn't posted yet.`}</span>
+      <span className={classes.message}>
+        Be sure to check back when they post something.
+      </span>
+    </div>
+  );
 };
 
 const PostList = () => {
@@ -26,24 +40,7 @@ const PostList = () => {
       date: getPostDate(new Date()),
       caption: "just setting up my twttr",
       image: { media: "", alt: "" },
-      replies: [
-        "whoa!",
-        "whoa!",
-        "whoa!",
-        "whoa!",
-        "whoa!",
-        "whoa!",
-        "whoa!",
-        "whoa!",
-        "whoa!",
-        "whoa!",
-        "whoa!",
-        "whoa!",
-        "whoa!",
-        "whoa!",
-        "whoa!",
-        "whoa!",
-      ],
+      replies,
       likes: 4689,
       retweets: 634,
     },
@@ -54,24 +51,7 @@ const PostList = () => {
       date: getPostDate(new Date()),
       caption: "Dress be making my booty look good 🍑",
       image: { media, alt: "My backside in a bodycon minidress" },
-      replies: [
-        "whoa!",
-        "whoa!",
-        "whoa!",
-        "whoa!",
-        "whoa!",
-        "whoa!",
-        "whoa!",
-        "whoa!",
-        "whoa!",
-        "whoa!",
-        "whoa!",
-        "whoa!",
-        "whoa!",
-        "whoa!",
-        "whoa!",
-        "whoa!",
-      ],
+      replies,
       likes: 22689,
       retweets: 834,
     },
@@ -85,24 +65,7 @@ const PostList = () => {
         media: placeholder,
         alt: "screenshot of Nikki Pinzon's portfolio website",
       },
-      replies: [
-        "whoa!",
-        "whoa!",
-        "whoa!",
-        "whoa!",
-        "whoa!",
-        "whoa!",
-        "whoa!",
-        "whoa!",
-        "whoa!",
-        "whoa!",
-        "whoa!",
-        "whoa!",
-        "whoa!",
-        "whoa!",
-        "whoa!",
-        "whoa!",
-      ],
+      replies,
       likes: 53845,
       retweets: 2816,
     },
@@ -113,24 +76,7 @@ const PostList = () => {
       date: getPostDate(new Date()),
       caption: "Dress be making my booty look good 🍑",
       image: { media, alt: "My backside in a bodycon minidress" },
-      replies: [
-        "whoa!",
-        "whoa!",
-        "whoa!",
-        "whoa!",
-        "whoa!",
-        "whoa!",
-        "whoa!",
-        "whoa!",
-        "whoa!",
-        "whoa!",
-        "whoa!",
-        "whoa!",
-        "whoa!",
-        "whoa!",
-        "whoa!",
-        "whoa!",
-      ],
+      replies,
       likes: 9437,
       retweets: 918,
     },
@@ -152,11 +98,7 @@ const PostList = () => {
 
   return (
     <ul className={classes.list}>
-      {posts.length !== 0 ? (
-        posts
-      ) : (
-        <p className={classes["empty-message"]}>Oof no posts yet, buddy</p>
-      )}
+      {posts.length !== 0 ? posts : <EmptyPostMessage />}
     </ul>
   );
 };
