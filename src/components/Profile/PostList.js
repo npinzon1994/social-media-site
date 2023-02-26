@@ -86,7 +86,6 @@ const PostList = () => {
     <Post
       name={post.name}
       username={post.username}
-      pfp={{ image: post.pfp, alt: "nikki profile pic" }}
       date={post.date}
       caption={post.caption}
       image={{ media: post.image.media, alt: post.image.alt }}

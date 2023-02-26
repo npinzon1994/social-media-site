@@ -71,12 +71,16 @@ const EditProfile = (props) => {
     resolver: zodResolver(schema),
   });
 
+  //To monitor number of characters used in input
   const inputChangeMonitors = {
     watchDisplayName: watch("displayName"),
     watchUsername: watch("username"),
     watchBio: watch("bio"),
     watchWebsite: watch("website"),
   };
+
+  const { watchDisplayName, watchUsername, watchBio, watchWebsite } =
+    inputChangeMonitors;
 
   //checking if values changed so we know whether or not to open Discard Modal
   const newDisplayName = getValues("displayName");
@@ -91,8 +95,6 @@ const EditProfile = (props) => {
   const bannerPicChanged = loadedBannerPic !== newBannerPic;
   const profilePicChanged = loadedProfilePic !== newProfilePic;
 
-  const { watchDisplayName, watchUsername, watchBio, watchWebsite } =
-    inputChangeMonitors;
 
   //
   useEffect(() => {

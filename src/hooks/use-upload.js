@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-let sourceElement = '';
+let sourceElement = "";
 
 const useUpload = () => {
   const [file, setFile] = useState();
@@ -9,7 +9,8 @@ const useUpload = () => {
     console.log("ELEMENT THAT TRIGGERED THIS EVENT:", event.target.id);
     if (
       event.target.id === "banner-upload" ||
-      event.target.id === "pfp-upload"
+      event.target.id === "pfp-upload" ||
+      event.target.id === "media-upload"
     ) {
       sourceElement = event.target.id;
     }

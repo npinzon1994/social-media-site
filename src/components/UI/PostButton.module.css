@@ -1,0 +1,16 @@
+.new-post {
+    text-decoration: none;
+    background-color: #ad5dfd;
+    color: white;
+    border-radius: 30px;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: medium;
+    transition: 0.3s;
+  }
+  
+  .new-post:hover {
+    background-color: #9954dd;
+  }

@@ -3,7 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   isEditing: false,
   isDiscarding: false,
-  isSubmitting: false
+  isSubmitting: false,
+  isPosting: false
 };
 
 const showHideModalSlice = createSlice({
@@ -18,6 +19,9 @@ const showHideModalSlice = createSlice({
     },
     setIsSubmitting(state, action) {
       state.isSubmitting = action.payload;
+    },
+    setIsPosting(state, action) {
+      state.isPosting = action.payload;
     },
   },
 });

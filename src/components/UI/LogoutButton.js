@@ -30,7 +30,7 @@ const LogoutButton = () => {
   const closeLogoutPopup = () => {
     setTimeout(() => {
       setWantsToLogout(false);
-    }, 92);
+    }, 100);
   };
 
   return (

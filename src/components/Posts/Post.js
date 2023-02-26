@@ -3,16 +3,13 @@ import classes from "./Post.module.css";
 import likeIcon from "../../assets/Posts/like-outline.svg";
 import retweetIcon from "../../assets/Posts/retweet.svg";
 import replyIcon from "../../assets/Posts/reply-outline.svg";
+import ProfilePicIcon from "../UI/ProfilePicIcon";
 
 const Post = (props) => {
   return (
     <li className={classes.container}>
       <div className={classes["pfp-container"]}>
-        <img
-          src={props.pfp.image}
-          alt={props.pfp.alt}
-          className={classes["profile-pic"]}
-        />
+        <ProfilePicIcon />
       </div>
       <div className={classes["inner-container"]}>
         <div className={classes["header-info"]}>

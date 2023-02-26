@@ -1,7 +1,7 @@
 import React from "react";
 import classes from "./Banner.module.css";
 import addImageButton from "../../../assets/Profile/add-pic.svg";
-import removeImageButton from "../../../assets/Profile/cross-white.svg";
+import removeImageButton from "../../../assets/cross-white.svg";
 
 const Banner = (props) => {
   return (
