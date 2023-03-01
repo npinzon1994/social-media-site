@@ -21,8 +21,8 @@ const NewPost = () => {
   const [characters, setCharacters] = useState(0);
   const inputRef = useRef();
 
-  const { file, sourceElement, uploadImage } = useUpload();
-  const { submitImageToFirebase, media, setMedia } = useSubmitImage();
+  const { files, sourceElement, uploadImage } = useUpload();
+  const { submitImageToFirebase, media } = useSubmitImage();
 
   const percentage = (characters / 280) * 100;
   const charactersLeft = 280 - characters;
@@ -49,8 +49,10 @@ const NewPost = () => {
   }, []);
 
   useEffect(() => {
-    submitImageToFirebase(file, sourceElement);
-  }, [file, sourceElement, submitImageToFirebase]);
+    console.log("FILES CHANGED!!");
+    submitImageToFirebase(files, sourceElement);
+    // setMedia(urlArray);
+  }, [files, sourceElement, submitImageToFirebase]);
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -58,8 +60,12 @@ const NewPost = () => {
   };
 
   const deleteImageHandler = () => {
-    setMedia(null);
-  }
+    // setMedia(null);
+  };
+
+  const mediaToBePosted = media.map((file) => (
+    <MediaToUpload src={file} alt="" onDelete={deleteImageHandler} />
+  ));
 
   return (
     <Modal onClose={hidePostWindow} className={classes["modal-window"]}>
@@ -77,20 +83,22 @@ const NewPost = () => {
                 placeholder="What's happening?"
                 maxLength="280"
                 onChange={inputChangeHandler}
-                minRows={media ? 1 : 4}
+                minRows={media.length > 0 ? 1 : 4}
               ></TextareaAutosize>
-              {media && <MediaToUpload src={media} alt="" onDelete={deleteImageHandler} />}
+
+              <ul className={classes["media-list"]}>{mediaToBePosted}</ul>
 
               {/* {characters ? <p>{characters}/280</p> : <p>0/280</p>} */}
               <div className={classes["media-upload-wrapper"]}>
                 <div className={classes["media-upload-container"]}>
                   <MediaUploadIcon
-                  type="file"
+                    type="file"
                     id="media-upload"
                     src={imageIcon}
                     alt="image icon"
                     accept=".jpg, .JPG, .jpeg, .JPEG, .png, .PNG, .mp4, .MP4, .mov, .MOV"
                     onUploadImage={uploadImage}
+                    multiple={true}
                   />
                   <MediaUploadIcon
                     id="gif-upload"

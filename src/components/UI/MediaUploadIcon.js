@@ -18,6 +18,7 @@ const MediaUploadIcon = (props) => {
           id={props.id}
           onChange={props.onUploadImage}
           className={classes["media-upload-input"]}
+          multiple={props.multiple || null}
         />
       )}
     </label>

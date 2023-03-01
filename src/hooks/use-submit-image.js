@@ -13,56 +13,65 @@ const useSubmitImage = () => {
 
   const [pfpState, setPfp] = useState(loadedProfilePic);
   const [bannerState, setBanner] = useState(loadedBannerPic);
-  const [mediaState, setMedia] = useState(null);
-  const [percent, setPercent] = useState(0);
+  const [mediaState, setMedia] = useState([]);
+  // const [percent, setPercent] = useState(0);
 
-  const submitImageToFirebase = useCallback(async (file, sourceElement) => {
-    console.log("Start of upload...");
 
-    try {
-      if (!file) {
-        throw new Error(`Cannot be empty, please upload a file.`);
-      }
-      const storageRefToBeSent = storageRef(storage, `/images/${file.name}`);
-      const uploadTask = uploadBytesResumable(storageRefToBeSent, file);
-
-      //showing upload progress
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          const percent = Math.round(
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+  const submitImageToFirebase = useCallback(
+    (files, sourceElement) => {
+      const promises = [];
+      files.forEach(function (file) {
+        try {
+          console.log("Looping through files");
+          const storageRefToBeSent = storageRef(
+            storage,
+            `/images/${file.name}`
           );
-          setPercent(percent);
-        },
-        //handling potential errors
-        (err) => console.log(err.message),
-        async () => {
-          //download url
-          const url = await getDownloadURL(uploadTask.snapshot.ref);
-          if (sourceElement === "banner-upload") {
-            setBanner(url);
-          }
-          if (sourceElement === "pfp-upload") {
-            setPfp(url);
-          }
-          if (sourceElement === "media-upload") {
-            setMedia(url);
-          }
+
+          const uploadTask = uploadBytesResumable(storageRefToBeSent, file);
+          promises.push(uploadTask);
+
+          //showing upload progress
+          uploadTask.on(
+            "state_changed",
+            (snapshot) => {
+              // const percent = Math.round(
+              //   (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+              // );
+              // setPercent(percent);
+            },
+            //handling potential errors
+            (err) => console.log(err),
+            async () => {
+              //download url
+              console.log("Upload done, getting download URL...");
+              const url = await getDownloadURL(uploadTask.snapshot.ref);
+              console.log("Received download URL: ", url);
+              if (sourceElement === "media-upload") {
+                setMedia((prevState) => [...prevState, url]);
+              }
+
+              if (sourceElement === "banner-upload") {
+                setBanner(url);
+              }
+              if (sourceElement === "pfp-upload") {
+                setPfp(url);
+              }
+            }
+          );
+        } catch (error) {
+          console.log(error.message);
         }
-      );
-    } catch (error) {
-      console.log(error.message);
-    }
-  }, []);
+      })
+    },
+    []
+  );
 
   return {
-    percent,
     submitImageToFirebase,
     newBannerPic: bannerState,
     newProfilePic: pfpState,
     media: mediaState,
-    setMedia,
     setBanner,
   };
 };

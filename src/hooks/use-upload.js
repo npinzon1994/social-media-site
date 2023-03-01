@@ -3,7 +3,7 @@ import { useState } from "react";
 let sourceElement = "";
 
 const useUpload = () => {
-  const [file, setFile] = useState();
+  const [files, setFiles] = useState([]);
 
   const uploadImage = (event) => {
     console.log("ELEMENT THAT TRIGGERED THIS EVENT:", event.target.id);
@@ -14,11 +14,20 @@ const useUpload = () => {
     ) {
       sourceElement = event.target.id;
     }
-    const image = event.target.files[0];
-    setFile((file) => image);
+
+
+    const imagesToBeSent = [];
+    const uploadedImages = [...event.target.files];
+    for(let i=0; i<4; i++){
+      const imageFile = uploadedImages[i];
+      console.log("Image " + (i+1), uploadedImages[i]);
+      imagesToBeSent.push(imageFile);
+    }
+
+    setFiles(imagesToBeSent);
   };
 
-  return { file, sourceElement, uploadImage };
+  return { files, sourceElement, uploadImage };
 };
 
 export default useUpload;

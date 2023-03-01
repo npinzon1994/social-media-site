@@ -56,7 +56,7 @@ const EditProfile = (props) => {
 
   //hooks
   const dispatch = useDispatch();
-  const { file, sourceElement, uploadImage } = useUpload();
+  const { files, sourceElement, uploadImage } = useUpload();
   const { submitImageToFirebase, setBanner, newBannerPic, newProfilePic } =
     useSubmitImage();
   const { getFirebaseId } = useFirebaseId();
@@ -98,8 +98,8 @@ const EditProfile = (props) => {
 
   //
   useEffect(() => {
-    submitImageToFirebase(file, sourceElement);
-  }, [file, sourceElement, submitImageToFirebase]);
+    submitImageToFirebase(files, sourceElement);
+  }, [files, sourceElement, submitImageToFirebase]);
 
   const deleteBannerImageHandler = () => {
     if (loadedBannerPic === defaultBannerPic) {
