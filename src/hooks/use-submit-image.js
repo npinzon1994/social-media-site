@@ -19,7 +19,6 @@ const useSubmitImage = () => {
 
   const submitImageToFirebase = useCallback(
     (files, sourceElement) => {
-      const promises = [];
       files.forEach(function (file) {
         try {
           console.log("Looping through files");
@@ -29,7 +28,6 @@ const useSubmitImage = () => {
           );
 
           const uploadTask = uploadBytesResumable(storageRefToBeSent, file);
-          promises.push(uploadTask);
 
           //showing upload progress
           uploadTask.on(

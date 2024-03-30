@@ -4,8 +4,9 @@ import Post from "../Posts/Post";
 import classes from "./PostList.module.css";
 import { truncate } from "../../util/profile";
 import { replies } from "./dummy-posts";
-import media from "../../assets/Posts/media-placeholder.jpg";
-import placeholder from "../../assets/Posts/placeholder-img.png";
+import postPic1 from "../../assets/Posts/cool-cat.jpg";
+import postPic2 from "../../assets/Posts/outta-this-world.jpg";
+import postPic3 from "../../assets/Posts/bold-and-brash.webp";
 
 const getPostDate = (date) => {
   const month = date.toLocaleString("default", { month: "short" });
@@ -49,8 +50,8 @@ const PostList = () => {
       username,
       pfp,
       date: getPostDate(new Date()),
-      caption: "Dress be making my booty look good 🍑",
-      image: { media, alt: "My backside in a bodycon minidress" },
+      caption: "I'm a cool cat 😎🐈",
+      image: { media: postPic1, alt: "cat wearing goggles with vibrant colors" },
       replies,
       likes: 22689,
       retweets: 834,
@@ -60,10 +61,10 @@ const PostList = () => {
       username,
       pfp,
       date: getPostDate(new Date()),
-      caption: "Heyoo check out this sick-ass portfolio 🤙",
+      caption: "I'm outta this world 🤙🌌",
       image: {
-        media: placeholder,
-        alt: "screenshot of Nikki Pinzon's portfolio website",
+        media: postPic2,
+        alt: "astronaut reclining in outerspace with vibrant colors",
       },
       replies,
       likes: 53845,
@@ -74,8 +75,8 @@ const PostList = () => {
       username,
       pfp,
       date: getPostDate(new Date()),
-      caption: "Dress be making my booty look good 🍑",
-      image: { media, alt: "My backside in a bodycon minidress" },
+      caption: "Bold and Brash (more like belongs in the trash) 💥",
+      image: { media: postPic3, alt: "abstract stylized oil painting of Squidward by Squidward (from Spongebob Squarepants)" },
       replies,
       likes: 9437,
       retweets: 918,

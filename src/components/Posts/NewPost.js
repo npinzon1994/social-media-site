@@ -15,6 +15,7 @@ import useUpload from "../../hooks/use-upload";
 import useSubmitImage from "../../hooks/use-submit-image";
 import TextareaAutosize from "react-textarea-autosize";
 import MediaToUpload from "./MediaToUpload";
+import MediaList from "./MediaList";
 
 const NewPost = () => {
   const dispatch = useDispatch();
@@ -51,7 +52,6 @@ const NewPost = () => {
   useEffect(() => {
     console.log("FILES CHANGED!!");
     submitImageToFirebase(files, sourceElement);
-    // setMedia(urlArray);
   }, [files, sourceElement, submitImageToFirebase]);
 
   const submitHandler = (event) => {
@@ -60,7 +60,7 @@ const NewPost = () => {
   };
 
   const deleteImageHandler = () => {
-    // setMedia(null);
+    
   };
 
   const mediaToBePosted = media.map((file) => (
@@ -86,7 +86,7 @@ const NewPost = () => {
                 minRows={media.length > 0 ? 1 : 4}
               ></TextareaAutosize>
 
-              <ul className={classes["media-list"]}>{mediaToBePosted}</ul>
+              <MediaList>{mediaToBePosted}</MediaList>
 
               {/* {characters ? <p>{characters}/280</p> : <p>0/280</p>} */}
               <div className={classes["media-upload-wrapper"]}>
